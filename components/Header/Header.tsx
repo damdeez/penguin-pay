@@ -1,8 +1,9 @@
 import React from 'react';
-import { StyleSheet, Text, View, Pressable, Platform } from 'react-native';
+import { StyleSheet, Text, View, Pressable } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import colors from '../../constants/theme';
 import { router } from 'expo-router';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 interface HeaderProps {
   navigation: { goBack: () => void };
@@ -14,9 +15,10 @@ interface HeaderProps {
 const Header = ({ navigation, options, route, back }: HeaderProps) => {
   const title = options.title ?? route.name;
   const showBack = route.name === 'send/index' || !!back;
+  const insets = useSafeAreaInsets();
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { paddingTop: insets.top + 8 }]}>
       {showBack ? (
         <Pressable
           accessibilityRole='button'
@@ -43,22 +45,22 @@ const Header = ({ navigation, options, route, back }: HeaderProps) => {
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: Platform.select({ ios: 64, android: 24, default: 16 }),
     paddingBottom: 16,
     paddingHorizontal: 16,
     backgroundColor: colors.background,
     flexDirection: 'row',
-    alignItems: 'flex-start',
     justifyContent: 'flex-start',
   },
   back: {
     marginRight: 16,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   title: {
     fontSize: 20,
     fontWeight: '700',
     color: colors.text,
-    textAlign: 'center',
+    textAlignVertical: 'center',
   },
 });
 

@@ -25,7 +25,12 @@ interface TabBarProps {
         }) => React.ReactNode;
         tabBarLabel?:
           | string
-          | ((p: { focused: boolean; color: string; position: LabelPosition; children: string }) => React.ReactNode);
+          | ((p: {
+              focused: boolean;
+              color: string;
+              position: LabelPosition;
+              children: string;
+            }) => React.ReactNode);
       };
     }
   >;
@@ -37,9 +42,14 @@ interface TabBarProps {
 
 const TabBar = ({ state, descriptors, navigation }: TabBarProps) => {
   const insets = useSafeAreaInsets();
-  
+
   return (
-    <View style={[styles.container, { paddingBottom: insets.bottom }]}>
+    <View
+      style={[
+        styles.container,
+        { paddingBottom: Math.max(insets.bottom - 8, 8) },
+      ]}
+    >
       {state.routes.map((route, i) => {
         const focused = state.index === i;
         const { options } = descriptors[route.key];
@@ -78,7 +88,7 @@ const TabBar = ({ state, descriptors, navigation }: TabBarProps) => {
                   children: String(label),
                 })
               ) : (
-                <Text style={[styles.label, { color }]}>{String(label)}</Text>
+                <Text style={[styles.label, { color }]}>{label}</Text>
               )}
             </View>
           </Pressable>

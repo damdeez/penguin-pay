@@ -92,7 +92,7 @@ Best Practices:
 - Use React Native Stylesheet API as the preferred way to write styles.
 - Hooks should contain shared logic such as API calls and data massaging, components should not handle heavy lifting logic, instead move that logic out into a hook if necessary.
 - Make sure all of your changes are clean of Eslint, format and TypeScript errors.
-- Use `npm` over any other package manager.
+- Use `bun` over any other package manager.
 - Don't write tests to check for styling in components and make sure to check tests for TS errors.
 - Limit leaving comments in tests unless the test is really intricate.
 - Always use semicolons after statements.

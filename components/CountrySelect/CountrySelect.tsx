@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Modal, Pressable, StyleSheet, Text, View, FlatList } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import colors from '../../constants/theme';
 import { COUNTRIES, CountryMeta } from './CountrySelect.helpers';
 
@@ -10,6 +11,7 @@ interface CountrySelectProps {
 
 const CountrySelect = ({ value, onChange }: CountrySelectProps) => {
   const [open, setOpen] = useState(false);
+  const insets = useSafeAreaInsets();
   const selectedLabel = `${value.name} (${value.currency})`;
 
   return (
@@ -23,9 +25,10 @@ const CountrySelect = ({ value, onChange }: CountrySelectProps) => {
         <Text style={styles.selectText}>{selectedLabel}</Text>
       </Pressable>
 
-      <Modal visible={open} transparent animationType='fade' onRequestClose={() => setOpen(false)}>
+      <Modal visible={open} transparent animationType='slide' onRequestClose={() => setOpen(false)}>
         <View style={styles.backdrop}>
-          <View style={styles.sheet}>
+          <View style={[styles.sheet, { paddingBottom: Math.max(insets.bottom, 12) }]}>
+            <View style={styles.handle} />
             <Text style={styles.sheetTitle}>Select country</Text>
             <FlatList
               data={COUNTRIES}
@@ -38,7 +41,9 @@ const CountrySelect = ({ value, onChange }: CountrySelectProps) => {
                   }}
                   style={styles.option}
                 >
-                  <Text style={styles.optionText}>{item.name} ({item.currency})</Text>
+                  <Text style={styles.optionText}>
+                    {item.name} ({item.currency})
+                  </Text>
                   <Text style={styles.optionSub}>{item.phonePrefix}</Text>
                 </Pressable>
               )}
@@ -76,15 +81,24 @@ const styles = StyleSheet.create({
   },
   backdrop: {
     flex: 1,
-    backgroundColor: colors.overlay,
-    justifyContent: 'center',
-    padding: 24,
+    justifyContent: 'flex-end',
   },
   sheet: {
     backgroundColor: colors.white,
-    borderRadius: 12,
+    borderTopLeftRadius: 16,
+    borderTopRightRadius: 16,
     maxHeight: '80%',
     padding: 12,
+    boxShadow: '0 0 12px 4px rgba(0, 0, 0, 0.2)',
+  },
+  handle: {
+    alignSelf: 'center',
+    width: 40,
+    height: 4,
+    borderRadius: 2,
+    backgroundColor: colors.borderMuted,
+    marginBottom: 16,
+    marginTop: 8,
   },
   sheetTitle: {
     fontSize: 16,
@@ -92,7 +106,6 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   option: {
-    paddingHorizontal: 8,
     paddingVertical: 12,
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: colors.borderMuted,
@@ -107,7 +120,7 @@ const styles = StyleSheet.create({
   },
   close: {
     alignSelf: 'center',
-    paddingVertical: 10,
+    paddingVertical: 16,
   },
   closeText: {
     color: colors.primary,

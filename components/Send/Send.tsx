@@ -1,5 +1,13 @@
 import React, { useState } from 'react';
-import { Alert, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, View } from 'react-native';
+import {
+  Alert,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import CountrySelect from '../CountrySelect/CountrySelect';
 import type { CountryMeta } from '../CountrySelect/CountrySelect.helpers';
 import { COUNTRIES } from '../CountrySelect/CountrySelect.helpers';
@@ -7,12 +15,20 @@ import TextField from '../TextField/TextField';
 import PhoneField from '../PhoneField/PhoneField';
 import Button from '../Button/Button';
 import useExchangeRates from '../../hooks/useExchangeRates';
-import { useSendSchema, type SendFormValues } from '../../hooks/useSendValidation';
+import {
+  useSendSchema,
+  type SendFormValues,
+} from '../../hooks/useSendValidation';
 import colors from '../../constants/theme';
 
 const formatMoney = (value: number, currency: string) => {
   try {
-    return new Intl.NumberFormat(undefined, { style: 'currency', currency, minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(value);
+    return new Intl.NumberFormat(undefined, {
+      style: 'currency',
+      currency,
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }).format(value);
   } catch {
     return `${value.toFixed(2)} ${currency}`;
   }
@@ -25,9 +41,18 @@ const Send = () => {
   const [phoneDigits, setPhoneDigits] = useState('');
   const [amountUsd, setAmountUsd] = useState('');
 
-  const [errors, setErrors] = useState<{ firstName?: string; lastName?: string; phoneDigits?: string; amountUsd?: string }>({});
+  const [errors, setErrors] = useState<{
+    firstName?: string;
+    lastName?: string;
+    phoneDigits?: string;
+    amountUsd?: string;
+  }>({});
 
-  const { convert, loading: ratesLoading, error: ratesError } = useExchangeRates();
+  const {
+    convert,
+    loading: ratesLoading,
+    error: ratesError,
+  } = useExchangeRates();
   const { validate } = useSendSchema(country);
 
   const nAmount = parseInt(amountUsd || '0', 10);
@@ -40,7 +65,12 @@ const Send = () => {
   })();
 
   const handleSend = () => {
-    const values: SendFormValues = { firstName, lastName, phoneDigits, amountUsd };
+    const values: SendFormValues = {
+      firstName,
+      lastName,
+      phoneDigits,
+      amountUsd,
+    };
     const result = validate(values);
     setErrors(result.errors);
     if (Object.keys(result.errors).length > 0) {
@@ -48,12 +78,21 @@ const Send = () => {
     }
 
     const fullPhone = `${country.phonePrefix}${phoneDigits}`;
-    Alert.alert('Sending', `Sending ${amountUsd} USD to ${firstName} ${lastName} (${fullPhone}).`);
+    Alert.alert(
+      'Sending',
+      `Sending ${amountUsd} USD to ${firstName} ${lastName} (${fullPhone}).`
+    );
   };
 
   return (
-    <KeyboardAvoidingView behavior={Platform.select({ ios: 'padding', android: undefined })} style={{ flex: 1 }}>
-      <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps='handled'>
+    <KeyboardAvoidingView
+      behavior={Platform.select({ ios: 'padding', android: undefined })}
+      style={{ flex: 1 }}
+    >
+      <ScrollView
+        contentContainerStyle={styles.container}
+        keyboardShouldPersistTaps='handled'
+      >
         <TextField
           label='First Name'
           value={firstName}
@@ -74,9 +113,20 @@ const Send = () => {
           returnKeyType='next'
         />
 
-        <CountrySelect value={country} onChange={(c) => { setCountry(c); setPhoneDigits(''); }} />
+        <CountrySelect
+          value={country}
+          onChange={(c) => {
+            setCountry(c);
+            setPhoneDigits('');
+          }}
+        />
 
-        <PhoneField country={country} value={phoneDigits} onChange={setPhoneDigits} error={errors.phoneDigits} />
+        <PhoneField
+          country={country}
+          value={phoneDigits}
+          onChange={setPhoneDigits}
+          error={errors.phoneDigits}
+        />
 
         <TextField
           label='Amount (USD)'
@@ -93,11 +143,17 @@ const Send = () => {
           {ratesLoading ? (
             <Text style={styles.summaryValue}>Loading rates…</Text>
           ) : converted != null ? (
-            <Text style={styles.summaryValue}>{formatMoney(converted, country.currency)}</Text>
+            <Text style={styles.summaryValue}>
+              {formatMoney(converted, country.currency)}
+            </Text>
           ) : (
             <Text style={styles.summaryValue}>—</Text>
           )}
-          {ratesError ? <Text style={styles.ratesNote}>Using fallback rates. Set EXPO_PUBLIC_OER_APP_ID for live rates.</Text> : null}
+          {ratesError ? (
+            <Text style={styles.ratesNote}>
+              Using fallback rates. Set EXPO_PUBLIC_OER_APP_ID for live rates.
+            </Text>
+          ) : null}
         </View>
 
         <Button label='Send' onPress={handleSend} />
