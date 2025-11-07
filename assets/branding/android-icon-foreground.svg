@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Foreground: transparent background, centered penguin mark within safe area -->
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+  <!-- 72px padding around to respect Android mask safe area -->
+  <g transform="translate(512 540) scale(0.76)">
+    <ellipse cx="0" cy="0" rx="220" ry="260" fill="#111827"/>
+    <ellipse cx="0" cy="40" rx="150" ry="200" fill="#F9FAFB"/>
+    <ellipse cx="-200" cy="10" rx="40" ry="120" fill="#0F172A" transform="rotate(-25 -200 10)"/>
+    <ellipse cx="200" cy="10" rx="40" ry="120" fill="#0F172A" transform="rotate(25 200 10)"/>
+    <ellipse cx="-70" cy="250" rx="60" ry="26" fill="#F59E0B"/>
+    <ellipse cx="70" cy="250" rx="60" ry="26" fill="#F59E0B"/>
+  </g>
+  <g transform="translate(512 340) scale(0.76)">
+    <circle cx="0" cy="0" r="140" fill="#111827"/>
+    <circle cx="-48" cy="-10" r="22" fill="#FFFFFF"/>
+    <circle cx="48" cy="-10" r="22" fill="#FFFFFF"/>
+    <circle cx="-48" cy="-10" r="10" fill="#111827"/>
+    <circle cx="48" cy="-10" r="10" fill="#111827"/>
+    <polygon points="0,10 36,64 -36,64" fill="#F59E0B"/>
+  </g>
+</svg>
+

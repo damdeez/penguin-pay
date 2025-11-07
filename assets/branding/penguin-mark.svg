@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#E6F4FE"/>
+      <stop offset="100%" stop-color="#CDEAFE"/>
+    </linearGradient>
+  </defs>
+  <rect width="1024" height="1024" rx="160" fill="url(#bg)"/>
+  <!-- Penguin body -->
+  <g transform="translate(512 560)">
+    <ellipse cx="0" cy="0" rx="220" ry="260" fill="#111827"/>
+    <!-- Belly -->
+    <ellipse cx="0" cy="40" rx="150" ry="200" fill="#F9FAFB"/>
+    <!-- Wings -->
+    <ellipse cx="-200" cy="10" rx="40" ry="120" fill="#0F172A" transform="rotate(-25 -200 10)"/>
+    <ellipse cx="200" cy="10" rx="40" ry="120" fill="#0F172A" transform="rotate(25 200 10)"/>
+    <!-- Feet -->
+    <ellipse cx="-70" cy="250" rx="60" ry="26" fill="#F59E0B"/>
+    <ellipse cx="70" cy="250" rx="60" ry="26" fill="#F59E0B"/>
+  </g>
+  <!-- Head -->
+  <g transform="translate(512 340)">
+    <circle cx="0" cy="0" r="140" fill="#111827"/>
+    <circle cx="-48" cy="-10" r="22" fill="#FFFFFF"/>
+    <circle cx="48" cy="-10" r="22" fill="#FFFFFF"/>
+    <circle cx="-48" cy="-10" r="10" fill="#111827"/>
+    <circle cx="48" cy="-10" r="10" fill="#111827"/>
+    <!-- Beak -->
+    <polygon points="0,10 36,64 -36,64" fill="#F59E0B"/>
+  </g>
+</svg>
+

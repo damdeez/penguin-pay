@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Monochrome (maskable) icon: single color silhouette -->
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+  <g transform="translate(512 512)">
+    <path d="M0-180c-88 0-160 72-160 160v120c0 22 18 40 40 40h240c22 0 40-18 40-40V-20c0-88-72-160-160-160z" fill="#111827"/>
+    <circle cx="0" cy="-220" r="120" fill="#111827"/>
+  </g>
+</svg>
+
