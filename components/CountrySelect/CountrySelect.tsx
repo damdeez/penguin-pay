@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import { Modal, Pressable, StyleSheet, Text, View, FlatList } from 'react-native';
 import colors from '../../constants/theme';
 import { COUNTRIES, CountryMeta } from './CountrySelect.helpers';
@@ -10,7 +10,7 @@ interface CountrySelectProps {
 
 const CountrySelect = ({ value, onChange }: CountrySelectProps) => {
   const [open, setOpen] = useState(false);
-  const selectedLabel = useMemo(() => `${value.name} (${value.currency})`, [value]);
+  const selectedLabel = `${value.name} (${value.currency})`;
 
   return (
     <View style={styles.container}>

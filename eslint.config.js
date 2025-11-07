@@ -20,6 +20,7 @@ module.exports = defineConfig([
         'error',
         { vars: 'all', varsIgnorePattern: '^_', args: 'after-used', argsIgnorePattern: '^_', ignoreRestSiblings: true },
       ],
+      curly: ['error', 'all'],
       // 'react-native/no-unused-styles': 'error', // Enable when plugin supports ESLint flat config
     },
   },

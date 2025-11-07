@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import { Alert, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, View } from 'react-native';
 import CountrySelect from '../CountrySelect/CountrySelect';
 import type { CountryMeta } from '../CountrySelect/CountrySelect.helpers';
@@ -30,18 +30,22 @@ const Send = () => {
   const { convert, loading: ratesLoading, error: ratesError } = useExchangeRates();
   const { validate } = useSendSchema(country);
 
-  const converted = useMemo(() => {
-    const n = parseInt(amountUsd || '0', 10);
-    if (!n || !convert) return null;
-    const val = convert(n, country.currency);
+  const nAmount = parseInt(amountUsd || '0', 10);
+  const converted = (() => {
+    if (!nAmount || !convert) {
+      return null;
+    }
+    const val = convert(nAmount, country.currency);
     return typeof val === 'number' ? val : null;
-  }, [amountUsd, country.currency, convert]);
+  })();
 
   const handleSend = () => {
     const values: SendFormValues = { firstName, lastName, phoneDigits, amountUsd };
     const result = validate(values);
     setErrors(result.errors);
-    if (Object.keys(result.errors).length > 0) return;
+    if (Object.keys(result.errors).length > 0) {
+      return;
+    }
 
     const fullPhone = `${country.phonePrefix}${phoneDigits}`;
     Alert.alert('Sending', `Sending ${amountUsd} USD to ${firstName} ${lastName} (${fullPhone}).`);
@@ -140,4 +144,3 @@ const styles = StyleSheet.create({
 });
 
 export default Send;
-

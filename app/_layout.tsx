@@ -2,6 +2,7 @@ import { Tabs } from 'expo-router';
 import Header from '../components/Header/Header';
 import { Ionicons } from '@expo/vector-icons';
 import colors from '../constants/theme';
+import TabBar from '../components/TabBar/TabBar';
 
 export default function RootLayout() {
   return (
@@ -9,16 +10,11 @@ export default function RootLayout() {
       screenOptions={{
         headerShown: true,
         header: (props) => <Header {...props} />,
-        tabBarActiveTintColor: colors.primary,
-        tabBarInactiveTintColor: colors.mutedText,
-        tabBarStyle: {
-          backgroundColor: colors.background,
-          borderTopWidth: 0,
-          paddingTop: 8,
-          boxShadow: '0 0 10px 0 rgba(0, 0, 0, 0.1)',
-        },
         sceneStyle: { backgroundColor: colors.background },
       }}
+      tabBar={(props) => (
+        <TabBar state={props.state} descriptors={props.descriptors} navigation={props.navigation} />
+      )}
     >
       <Tabs.Screen
         name='index'

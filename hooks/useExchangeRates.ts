@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 type Rates = Record<string, number>;
 
@@ -40,7 +40,7 @@ const useExchangeRates = (): ExchangeResult => {
         if (!res.ok) {
           throw new Error(`Failed to fetch rates: ${res.status}`);
         }
-        const data = (await res.json()) as { rates: Rates; base: string };
+        const data: { rates: Rates; base: string } = await res.json();
         const subset: Rates = {
           KES: data.rates['KES'],
           NGN: data.rates['NGN'],
@@ -60,14 +60,16 @@ const useExchangeRates = (): ExchangeResult => {
     return () => controller.abort();
   }, []);
 
-  const convert = useMemo(() => {
-    return (amountUsd: number, currency: string) => {
-      if (!rates) return null;
-      const rate = rates[currency];
-      if (!rate || Number.isNaN(amountUsd)) return null;
-      return amountUsd * rate;
-    };
-  }, [rates]);
+  const convert = (amountUsd: number, currency: string) => {
+    if (!rates) {
+      return null;
+    }
+    const rate = rates[currency];
+    if (!rate || Number.isNaN(amountUsd)) {
+      return null;
+    }
+    return amountUsd * rate;
+  };
 
   return { rates, base: 'USD', loading, error, convert };
 };

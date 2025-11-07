@@ -32,14 +32,17 @@ export const useSendSchema = (country: CountryMeta) => {
   const validate = (values: SendFormValues) => {
     const parsed = schema.safeParse(values);
     if (parsed.success) {
-      return { data: parsed.data, errors: {} as SendFormErrors };
+      return { data: parsed.data, errors: {} };
     }
     const flat = parsed.error.flatten();
     const err: SendFormErrors = {};
-    (Object.keys(flat.fieldErrors) as (keyof SendFormValues)[]).forEach((k) => {
+    const keys: (keyof SendFormValues)[] = ['firstName', 'lastName', 'phoneDigits', 'amountUsd'];
+    for (const k of keys) {
       const msgs = flat.fieldErrors[k];
-      if (msgs && msgs.length) err[k] = msgs[0] as string;
-    });
+      if (msgs && msgs.length > 0) {
+        err[k] = String(msgs[0]);
+      }
+    }
     return { data: null, errors: err };
   };
 
