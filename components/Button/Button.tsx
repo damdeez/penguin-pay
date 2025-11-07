@@ -11,7 +11,7 @@ interface ButtonProps {
 const Button = ({ label, onPress, disabled = false, style }: ButtonProps) => {
   return (
     <Pressable
-      accessibilityRole="button"
+      accessibilityRole='button'
       onPress={onPress}
       disabled={disabled}
       style={({ pressed }) => [
@@ -48,4 +48,3 @@ const styles = StyleSheet.create({
 });
 
 export default Button;
-

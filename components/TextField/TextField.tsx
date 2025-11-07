@@ -12,7 +12,7 @@ const TextField = ({ label, error, ...inputProps }: TextFieldProps) => {
       <Text style={styles.label}>{label}</Text>
       <TextInput
         style={[styles.input, error ? styles.inputError : null]}
-        placeholderTextColor="#9ca3af"
+        placeholderTextColor='#9ca3af'
         {...inputProps}
       />
       {error ? <Text style={styles.error}>{error}</Text> : null}
@@ -49,4 +49,3 @@ const styles = StyleSheet.create({
 });
 
 export default TextField;
-

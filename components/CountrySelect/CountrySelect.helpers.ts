@@ -4,7 +4,7 @@ export interface CountryMeta {
   code: CountryCode;
   name: string;
   currency: 'KES' | 'NGN' | 'TZS' | 'UGX';
-  phonePrefix: string; // includes +
+  phonePrefix: string;
   digitsAfterPrefix: number;
 }
 
@@ -22,4 +22,3 @@ export const getCountryMeta = (code: CountryCode): CountryMeta => {
   }
   return meta;
 };
-

@@ -19,9 +19,9 @@ const PhoneField = ({ country, value, onChange, error }: PhoneFieldProps) => {
           style={styles.input}
           value={value}
           onChangeText={(t) => onChange(t.replace(/\D+/g, ''))}
-          keyboardType="number-pad"
+          keyboardType='number-pad'
           placeholder={`digits (${country.digitsAfterPrefix})`}
-          placeholderTextColor="#9ca3af"
+          placeholderTextColor='#9ca3af'
           maxLength={country.digitsAfterPrefix}
         />
       </View>
@@ -71,4 +71,3 @@ const styles = StyleSheet.create({
 });
 
 export default PhoneField;
-

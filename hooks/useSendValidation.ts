@@ -47,4 +47,3 @@ export const useSendSchema = (country: CountryMeta) => {
 };
 
 export default useSendSchema;
-

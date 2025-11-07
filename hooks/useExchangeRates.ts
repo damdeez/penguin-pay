@@ -11,7 +11,6 @@ interface ExchangeResult {
 }
 
 const FALLBACK_RATES: Rates = {
-  // These are placeholder estimates; replace with live rates via env key.
   KES: 130,
   NGN: 1600,
   TZS: 2600,
@@ -20,7 +19,7 @@ const FALLBACK_RATES: Rates = {
 
 const LATEST_URL = 'https://openexchangerates.org/api/latest.json';
 
-export const useExchangeRates = (): ExchangeResult => {
+const useExchangeRates = (): ExchangeResult => {
   const [rates, setRates] = useState<Rates | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -28,7 +27,6 @@ export const useExchangeRates = (): ExchangeResult => {
   useEffect(() => {
     const appId = process.env.EXPO_PUBLIC_OER_APP_ID;
     if (!appId) {
-      // No env key; use fallback so UI still works.
       setRates(FALLBACK_RATES);
       return;
     }
@@ -36,12 +34,13 @@ export const useExchangeRates = (): ExchangeResult => {
     const fetchRates = async () => {
       try {
         setLoading(true);
-        const res = await fetch(`${LATEST_URL}?app_id=${appId}`, { signal: controller.signal });
+        const res = await fetch(`${LATEST_URL}?app_id=${appId}`, {
+          signal: controller.signal,
+        });
         if (!res.ok) {
           throw new Error(`Failed to fetch rates: ${res.status}`);
         }
         const data = (await res.json()) as { rates: Rates; base: string };
-        // We only care about a few currencies; build a minimal map.
         const subset: Rates = {
           KES: data.rates['KES'],
           NGN: data.rates['NGN'],
@@ -74,4 +73,3 @@ export const useExchangeRates = (): ExchangeResult => {
 };
 
 export default useExchangeRates;
-

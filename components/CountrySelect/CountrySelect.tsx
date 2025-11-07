@@ -15,14 +15,14 @@ const CountrySelect = ({ value, onChange }: CountrySelectProps) => {
     <View style={styles.container}>
       <Text style={styles.label}>Recipient Country</Text>
       <Pressable
-        accessibilityRole="button"
+        accessibilityRole='button'
         onPress={() => setOpen(true)}
         style={styles.select}
       >
         <Text style={styles.selectText}>{selectedLabel}</Text>
       </Pressable>
 
-      <Modal visible={open} transparent animationType="fade" onRequestClose={() => setOpen(false)}>
+      <Modal visible={open} transparent animationType='fade' onRequestClose={() => setOpen(false)}>
         <View style={styles.backdrop}>
           <View style={styles.sheet}>
             <Text style={styles.sheetTitle}>Select country</Text>
@@ -115,4 +115,3 @@ const styles = StyleSheet.create({
 });
 
 export default CountrySelect;
-

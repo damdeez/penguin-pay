@@ -9,7 +9,9 @@
     "android": "expo run:android",
     "ios": "expo run:ios",
     "web": "expo start --web",
-    "lint": "expo lint"
+    "lint": "expo lint",
+    "build:android": "expo run:android --device",
+    "build:ios": "expo run:ios --device"
   },
   "dependencies": {
     "@expo/vector-icons": "^15.0.3",
@@ -43,7 +45,9 @@
     "@types/react": "~19.1.0",
     "typescript": "~5.9.2",
     "eslint": "^9.25.0",
-    "eslint-config-expo": "~10.0.0"
+    "eslint-config-expo": "~10.0.0",
+    "eslint-plugin-react-native": "^4.0.0",
+    "eslint-plugin-unused-imports": "^3.2.0"
   },
   "private": true
 }

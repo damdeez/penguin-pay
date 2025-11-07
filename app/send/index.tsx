@@ -1,5 +1,13 @@
 import React, { useMemo, useState } from 'react';
-import { Alert, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, View } from 'react-native';
+import {
+  Alert,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import CountrySelect from '../../components/CountrySelect/CountrySelect';
 import type { CountryMeta } from '../../components/CountrySelect/CountrySelect.helpers';
 import { COUNTRIES } from '../../components/CountrySelect/CountrySelect.helpers';
@@ -7,18 +15,23 @@ import TextField from '../../components/TextField/TextField';
 import PhoneField from '../../components/PhoneField/PhoneField';
 import Button from '../../components/Button/Button';
 import useExchangeRates from '../../hooks/useExchangeRates';
-import { useSendSchema, type SendFormValues } from '../../hooks/useSendValidation';
+import {
+  useSendSchema,
+  type SendFormValues,
+} from '../../hooks/useSendValidation';
 
 const formatMoney = (value: number, currency: string) => {
   try {
-    return new Intl.NumberFormat(undefined, { style: 'currency', currency, minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(value);
+    return new Intl.NumberFormat(undefined, {
+      style: 'currency',
+      currency,
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }).format(value);
   } catch {
-    // Fallback when currency isn't supported in Intl on some platforms
     return `${value.toFixed(2)} ${currency}`;
   }
 };
-
-// Validation is handled by Zod schema in hooks/useSendValidation
 
 const Send = () => {
   const [firstName, setFirstName] = useState('');
@@ -27,9 +40,18 @@ const Send = () => {
   const [phoneDigits, setPhoneDigits] = useState('');
   const [amountUsd, setAmountUsd] = useState('');
 
-  const [errors, setErrors] = useState<{ firstName?: string; lastName?: string; phoneDigits?: string; amountUsd?: string }>({});
+  const [errors, setErrors] = useState<{
+    firstName?: string;
+    lastName?: string;
+    phoneDigits?: string;
+    amountUsd?: string;
+  }>({});
 
-  const { convert, loading: ratesLoading, error: ratesError } = useExchangeRates();
+  const {
+    convert,
+    loading: ratesLoading,
+    error: ratesError,
+  } = useExchangeRates();
   const { validate } = useSendSchema(country);
 
   const converted = useMemo(() => {
@@ -40,7 +62,12 @@ const Send = () => {
   }, [amountUsd, country.currency, convert]);
 
   const handleSend = () => {
-    const values: SendFormValues = { firstName, lastName, phoneDigits, amountUsd };
+    const values: SendFormValues = {
+      firstName,
+      lastName,
+      phoneDigits,
+      amountUsd,
+    };
     const result = validate(values);
     setErrors(result.errors);
     if (Object.keys(result.errors).length > 0) return;
@@ -50,31 +77,42 @@ const Send = () => {
   };
 
   return (
-    <KeyboardAvoidingView behavior={Platform.select({ ios: 'padding', android: undefined })} style={{ flex: 1 }}>
-      <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled">
-        <Text style={styles.title}>Send Transaction</Text>
+    <KeyboardAvoidingView
+      behavior={Platform.select({ ios: 'padding', android: undefined })}
+      style={{ flex: 1 }}
+    >
+      <ScrollView
+        contentContainerStyle={styles.container}
+        keyboardShouldPersistTaps='handled'
+      >
 
         <TextField
-          label="First Name"
+          label='First Name'
           value={firstName}
           onChangeText={setFirstName}
-          autoCapitalize="words"
+          autoCapitalize='words'
           error={errors.firstName}
-          placeholder="Jane"
-          returnKeyType="next"
+          placeholder='Jane'
+          returnKeyType='next'
         />
 
         <TextField
-          label="Last Name"
+          label='Last Name'
           value={lastName}
           onChangeText={setLastName}
-          autoCapitalize="words"
+          autoCapitalize='words'
           error={errors.lastName}
-          placeholder="Doe"
-          returnKeyType="next"
+          placeholder='Doe'
+          returnKeyType='next'
         />
 
-        <CountrySelect value={country} onChange={(c) => { setCountry(c); setPhoneDigits(''); }} />
+        <CountrySelect
+          value={country}
+          onChange={(c) => {
+            setCountry(c);
+            setPhoneDigits('');
+          }}
+        />
 
         <PhoneField
           country={country}
@@ -84,12 +122,12 @@ const Send = () => {
         />
 
         <TextField
-          label="Amount (USD)"
+          label='Amount (USD)'
           value={amountUsd}
           onChangeText={(t) => setAmountUsd(t.replace(/\D+/g, ''))}
-          keyboardType="number-pad"
+          keyboardType='number-pad'
           error={errors.amountUsd}
-          placeholder="e.g. 10"
+          placeholder='e.g. 10'
           maxLength={7}
         />
 
@@ -98,14 +136,20 @@ const Send = () => {
           {ratesLoading ? (
             <Text style={styles.summaryValue}>Loading rates…</Text>
           ) : converted != null ? (
-            <Text style={styles.summaryValue}>{formatMoney(converted, country.currency)}</Text>
+            <Text style={styles.summaryValue}>
+              {formatMoney(converted, country.currency)}
+            </Text>
           ) : (
             <Text style={styles.summaryValue}>—</Text>
           )}
-          {ratesError ? <Text style={styles.ratesNote}>Using fallback rates. Set EXPO_PUBLIC_OER_APP_ID for live rates.</Text> : null}
+          {ratesError ? (
+            <Text style={styles.ratesNote}>
+              Using fallback rates. Set EXPO_PUBLIC_OER_APP_ID for live rates.
+            </Text>
+          ) : null}
         </View>
 
-        <Button label="Send" onPress={handleSend} />
+        <Button label='Send' onPress={handleSend} />
       </ScrollView>
     </KeyboardAvoidingView>
   );
@@ -113,8 +157,8 @@ const Send = () => {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 20,
-    backgroundColor: '#f9fafb',
+    padding: 16,
+    backgroundColor: '#fff',
     gap: 4,
   },
   title: {
