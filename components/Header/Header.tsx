@@ -1,6 +1,8 @@
 import React from 'react';
 import { StyleSheet, Text, View, Pressable, Platform } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import colors from '../../constants/theme';
+import { router } from 'expo-router';
 
 interface HeaderProps {
   navigation: { goBack: () => void };
@@ -11,21 +13,27 @@ interface HeaderProps {
 
 const Header = ({ navigation, options, route, back }: HeaderProps) => {
   const title = options.title ?? route.name;
+  const showBack = route.name === 'send/index' || !!back;
 
   return (
     <View style={styles.container}>
-      {back ? (
+      {showBack ? (
         <Pressable
           accessibilityRole='button'
           accessibilityLabel='Go back'
-          onPress={navigation.goBack}
+          onPress={() => {
+            if (back) {
+              navigation.goBack();
+              return;
+            }
+
+            router.navigate('/');
+          }}
           style={styles.back}
         >
-          <Ionicons name='chevron-back' size={24} color='#111827' />
+          <Ionicons name='chevron-back' size={24} color={colors.text} />
         </Pressable>
-      ) : (
-        <View style={styles.backPlaceholder} />
-      )}
+      ) : null}
       <Text numberOfLines={1} style={styles.title}>
         {title}
       </Text>
@@ -35,27 +43,22 @@ const Header = ({ navigation, options, route, back }: HeaderProps) => {
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: Platform.select({ ios: 54, android: 24, default: 16 }),
-    paddingBottom: 12,
+    paddingTop: Platform.select({ ios: 64, android: 24, default: 16 }),
+    paddingBottom: 16,
     paddingHorizontal: 16,
-    backgroundColor: "#ffffff",
-    flexDirection: "row",
-    alignItems: "center",
+    backgroundColor: colors.background,
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
   },
   back: {
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  backPlaceholder: {
-    width: 24,
-    height: 24,
+    marginRight: 16,
   },
   title: {
-    flex: 1,
-    fontSize: 18,
-    fontWeight: "700",
-    color: "#111827",
-    textAlign: "center",
+    fontSize: 20,
+    fontWeight: '700',
+    color: colors.text,
+    textAlign: 'center',
   },
 });
 

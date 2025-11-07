@@ -1,5 +1,6 @@
 import React from 'react';
 import { Pressable, StyleSheet, Text, ViewStyle } from 'react-native';
+import colors from '../../constants/theme';
 
 interface ButtonProps {
   label: string;
@@ -28,7 +29,7 @@ const Button = ({ label, onPress, disabled = false, style }: ButtonProps) => {
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: '#2563eb',
+    backgroundColor: colors.primary,
     paddingVertical: 14,
     paddingHorizontal: 16,
     borderRadius: 8,
@@ -38,10 +39,10 @@ const styles = StyleSheet.create({
     opacity: 0.9,
   },
   buttonDisabled: {
-    backgroundColor: '#93c5fd',
+    backgroundColor: colors.primaryMuted,
   },
   label: {
-    color: '#fff',
+    color: colors.white,
     fontSize: 16,
     fontWeight: '600',
   },

@@ -1,7 +1,6 @@
 const { defineConfig } = require('eslint/config');
 const expoConfig = require('eslint-config-expo/flat');
 const unusedImports = require('eslint-plugin-unused-imports');
-const reactNative = require('eslint-plugin-react-native');
 
 module.exports = defineConfig([
   expoConfig,
@@ -12,7 +11,6 @@ module.exports = defineConfig([
     files: ['**/*.{js,jsx,ts,tsx}'],
     plugins: {
       'unused-imports': unusedImports,
-      'react-native': reactNative,
     },
     rules: {
       quotes: ['error', 'single', { avoidEscape: true }],
@@ -22,7 +20,7 @@ module.exports = defineConfig([
         'error',
         { vars: 'all', varsIgnorePattern: '^_', args: 'after-used', argsIgnorePattern: '^_', ignoreRestSiblings: true },
       ],
-      'react-native/no-unused-styles': 'error',
+      // 'react-native/no-unused-styles': 'error', // Enable when plugin supports ESLint flat config
     },
   },
 ]);

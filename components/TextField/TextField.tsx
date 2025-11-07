@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, TextInput, TextInputProps, View } from 'react-native';
+import colors from '../../constants/theme';
 
 interface TextFieldProps extends Pick<TextInputProps, 'value' | 'onChangeText' | 'keyboardType' | 'placeholder' | 'autoCapitalize' | 'onBlur' | 'returnKeyType' | 'onSubmitEditing' | 'maxLength'> {
   label: string;
@@ -26,24 +27,24 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 14,
-    color: '#374151',
+    color: colors.label,
     marginBottom: 6,
   },
   input: {
     borderWidth: 1,
-    borderColor: '#d1d5db',
+    borderColor: colors.border,
     borderRadius: 8,
     paddingHorizontal: 12,
     paddingVertical: 12,
     fontSize: 16,
-    color: '#111827',
+    color: colors.text,
   },
   inputError: {
-    borderColor: '#ef4444',
+    borderColor: colors.error,
   },
   error: {
     marginTop: 6,
-    color: '#ef4444',
+    color: colors.error,
     fontSize: 12,
   },
 });

@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { Modal, Pressable, StyleSheet, Text, View, FlatList } from 'react-native';
+import colors from '../../constants/theme';
 import { COUNTRIES, CountryMeta } from './CountrySelect.helpers';
 
 interface CountrySelectProps {
@@ -58,29 +59,29 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 14,
-    color: '#374151',
+    color: colors.label,
     marginBottom: 6,
   },
   select: {
     borderWidth: 1,
-    borderColor: '#d1d5db',
+    borderColor: colors.border,
     borderRadius: 8,
     paddingHorizontal: 12,
     paddingVertical: 12,
-    backgroundColor: '#fff',
+    backgroundColor: colors.white,
   },
   selectText: {
     fontSize: 16,
-    color: '#111827',
+    color: colors.text,
   },
   backdrop: {
     flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.3)',
+    backgroundColor: colors.overlay,
     justifyContent: 'center',
     padding: 24,
   },
   sheet: {
-    backgroundColor: '#fff',
+    backgroundColor: colors.white,
     borderRadius: 12,
     maxHeight: '80%',
     padding: 12,
@@ -94,22 +95,22 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     paddingVertical: 12,
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: '#e5e7eb',
+    borderBottomColor: colors.borderMuted,
   },
   optionText: {
     fontSize: 16,
-    color: '#111827',
+    color: colors.text,
   },
   optionSub: {
     fontSize: 12,
-    color: '#6b7280',
+    color: colors.mutedText,
   },
   close: {
     alignSelf: 'center',
     paddingVertical: 10,
   },
   closeText: {
-    color: '#2563eb',
+    color: colors.primary,
     fontWeight: '600',
   },
 });

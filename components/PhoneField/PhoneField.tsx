@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, TextInput, View } from 'react-native';
+import colors from '../../constants/theme';
 import type { CountryMeta } from '../CountrySelect/CountrySelect.helpers';
 
 interface PhoneFieldProps {
@@ -36,24 +37,24 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 14,
-    color: '#374151',
+    color: colors.label,
     marginBottom: 6,
   },
   inputRow: {
     borderWidth: 1,
-    borderColor: '#d1d5db',
+    borderColor: colors.border,
     borderRadius: 8,
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#fff',
+    backgroundColor: colors.white,
   },
   inputError: {
-    borderColor: '#ef4444',
+    borderColor: colors.error,
   },
   prefix: {
     paddingHorizontal: 12,
     paddingVertical: 12,
-    color: '#111827',
+    color: colors.text,
     fontSize: 16,
   },
   input: {
@@ -61,11 +62,11 @@ const styles = StyleSheet.create({
     paddingRight: 12,
     paddingVertical: 12,
     fontSize: 16,
-    color: '#111827',
+    color: colors.text,
   },
   error: {
     marginTop: 6,
-    color: '#ef4444',
+    color: colors.error,
     fontSize: 12,
   },
 });
