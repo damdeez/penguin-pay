@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import {
-  Alert,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
@@ -17,18 +16,13 @@ import Button from '@/components/Button/Button';
 import useExchangeRates from '@/hooks/useExchangeRates';
 import { useSendSchema, type SendFormValues } from '@/hooks/useSendValidation';
 import colors from '@/constants/theme';
-import { useGlobalSearchParams, useRouter } from 'expo-router';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 import useHeaderColor from '@/hooks/useHeaderColor';
 import SummaryBox from '@/components/SummaryBox/SummaryBox';
 
 const Recipient = () => {
-  const params = useGlobalSearchParams();
-  const amountUsdStr =
-    typeof params.amountUsd === 'string'
-      ? params.amountUsd
-      : Array.isArray(params.amountUsd)
-      ? params.amountUsd[0] ?? ''
-      : '';
+  const { amountUsd: amountUsdParam } = useLocalSearchParams<{ amountUsd?: string }>();
+  const amountUsdStr = amountUsdParam ?? '';
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [country, setCountry] = useState<CountryMeta>(COUNTRIES[0]);
@@ -58,7 +52,6 @@ const Recipient = () => {
     }
   }
 
-
   const handleSend = () => {
     const values: SendFormValues = {
       firstName,
@@ -73,24 +66,17 @@ const Recipient = () => {
       return;
     }
 
-    const fullPhone = `${country.phonePrefix}${phoneDigits}`;
-    Alert.alert(
-      'Sending',
-      `Sending ${amountUsdStr} USD to ${firstName} ${lastName} (${fullPhone}).`,
-      [
-        {
-          text: 'Cancel',
-          style: 'cancel',
-        },
-        {
-          text: 'Send',
-          style: 'destructive',
-          onPress: () => {
-            router.push('/');
-          },
-        },
-      ]
-    );
+    router.push({
+      pathname: '/send/confirm',
+      params: {
+        firstName,
+        lastName,
+        phoneDigits,
+        amountUsd: amountUsdStr,
+        countryCode: country.code,
+        convertedAmount: convertedAmount != null ? String(convertedAmount) : '',
+      },
+    });
   };
 
   useHeaderColor(scrolled ? colors.white : colors.background, colors.text);
@@ -153,7 +139,7 @@ const Recipient = () => {
           note={
             ratesError
               ? 'Using fallback rates. Set EXPO_PUBLIC_OER_APP_ID for live rates.'
-              : `Sending $${amountUsdStr} USD`
+              : `Sending ${amountUsdStr} USD`
           }
         />
 

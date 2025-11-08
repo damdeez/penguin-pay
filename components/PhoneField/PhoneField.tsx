@@ -5,7 +5,7 @@ import type { CountryMeta } from '@/components/CountrySelect/CountrySelect.helpe
 
 interface PhoneFieldProps {
   country: CountryMeta;
-  value: string; // only digits after prefix
+  value: string;
   onChange: (digits: string) => void;
   error?: string;
 }

@@ -13,6 +13,7 @@ export default function SendLayout() {
     >
       <Stack.Screen name='index' options={{ title: 'Amount to Send' }} />
       <Stack.Screen name='recipient/index' options={{ title: 'Recipient' }} />
+      <Stack.Screen name='confirm/index' options={{ title: 'Confirm' }} />
     </Stack>
   );
 }

@@ -9,37 +9,41 @@ export default function RootLayout() {
   return (
     <HeaderAppearanceProvider>
       <Tabs
-      screenOptions={{
-        headerShown: true,
-        header: (props) => <Header {...props} />,
-        sceneStyle: { backgroundColor: colors.background },
-      }}
-      tabBar={(props) => (
-        <TabBar state={props.state} descriptors={props.descriptors} navigation={props.navigation} />
-      )}
+        screenOptions={{
+          headerShown: true,
+          header: (props) => <Header {...props} />,
+          sceneStyle: { backgroundColor: colors.background },
+        }}
+        tabBar={(props) => (
+          <TabBar
+            state={props.state}
+            descriptors={props.descriptors}
+            navigation={props.navigation}
+          />
+        )}
       >
-      <Tabs.Screen
-        name='index'
-        options={{
-          headerShown: false,
-          title: 'Home',
-          tabBarLabel: 'Home',
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name='home-sharp' color={color} size={size} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name='send'
-        options={{
-          headerShown: false,
-          title: 'Send Transaction',
-          tabBarLabel: 'Send',
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name='send-sharp' color={color} size={size} />
-          ),
-        }}
-      />
+        <Tabs.Screen
+          name='index'
+          options={{
+            headerShown: false,
+            title: 'Home',
+            tabBarLabel: 'Home',
+            tabBarIcon: ({ color, size }) => (
+              <Ionicons name='home-sharp' color={color} size={size} />
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name='send'
+          options={{
+            headerShown: false,
+            title: 'Send Transaction',
+            tabBarLabel: 'Send',
+            tabBarIcon: ({ color, size }) => (
+              <Ionicons name='send-sharp' color={color} size={size} />
+            ),
+          }}
+        />
       </Tabs>
     </HeaderAppearanceProvider>
   );

@@ -174,6 +174,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primary,
   },
   amountArea: {
+    height: '100%',
     borderTopLeftRadius: 16,
     borderTopRightRadius: 16,
     backgroundColor: colors.white,
