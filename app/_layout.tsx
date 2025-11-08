@@ -3,10 +3,12 @@ import Header from '../components/Header/Header';
 import { Ionicons } from '@expo/vector-icons';
 import colors from '../constants/theme';
 import TabBar from '../components/TabBar/TabBar';
+import HeaderAppearanceProvider from '../components/HeaderAppearance/HeaderAppearanceProvider';
 
 export default function RootLayout() {
   return (
-    <Tabs
+    <HeaderAppearanceProvider>
+      <Tabs
       screenOptions={{
         headerShown: true,
         header: (props) => <Header {...props} />,
@@ -15,7 +17,7 @@ export default function RootLayout() {
       tabBar={(props) => (
         <TabBar state={props.state} descriptors={props.descriptors} navigation={props.navigation} />
       )}
-    >
+      >
       <Tabs.Screen
         name='index'
         options={{
@@ -28,8 +30,9 @@ export default function RootLayout() {
         }}
       />
       <Tabs.Screen
-        name='send/index'
+        name='send'
         options={{
+          headerShown: false,
           title: 'Send Transaction',
           tabBarLabel: 'Send',
           tabBarIcon: ({ color, size }) => (
@@ -37,6 +40,7 @@ export default function RootLayout() {
           ),
         }}
       />
-    </Tabs>
+      </Tabs>
+    </HeaderAppearanceProvider>
   );
 }

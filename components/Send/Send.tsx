@@ -1,201 +1,149 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import {
-  Alert,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
   StyleSheet,
-  Text,
   View,
+  Text,
+  NativeSyntheticEvent,
+  NativeScrollEvent,
 } from 'react-native';
-import CountrySelect from '../CountrySelect/CountrySelect';
-import type { CountryMeta } from '../CountrySelect/CountrySelect.helpers';
-import { COUNTRIES } from '../CountrySelect/CountrySelect.helpers';
 import TextField from '../TextField/TextField';
-import PhoneField from '../PhoneField/PhoneField';
 import Button from '../Button/Button';
 import useExchangeRates from '../../hooks/useExchangeRates';
-import {
-  useSendSchema,
-  type SendFormValues,
-} from '../../hooks/useSendValidation';
-import colors from '../../constants/theme';
+import { useSendAmountSchema } from '../../hooks/useSendAmountValidation';
 
-const formatMoney = (value: number, currency: string) => {
-  try {
-    return new Intl.NumberFormat(undefined, {
-      style: 'currency',
-      currency,
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-    }).format(value);
-  } catch {
-    return `${value.toFixed(2)} ${currency}`;
-  }
-};
+import colors from '../../constants/theme';
+import { useRouter } from 'expo-router';
+import CountrySelect from '../CountrySelect/CountrySelect';
+import { COUNTRIES, CountryMeta } from '../CountrySelect/CountrySelect.helpers';
+import useHeaderColor from '../../hooks/useHeaderColor';
+import SummaryBox from '../SummaryBox/SummaryBox';
 
 const Send = () => {
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [country, setCountry] = useState<CountryMeta>(COUNTRIES[0]);
-  const [phoneDigits, setPhoneDigits] = useState('');
   const [amountUsd, setAmountUsd] = useState('');
+  const [country, setCountry] = useState<CountryMeta>(COUNTRIES[0]);
+  const [scrolled, setScrolled] = useState(false);
 
-  const [errors, setErrors] = useState<{
-    firstName?: string;
-    lastName?: string;
-    phoneDigits?: string;
-    amountUsd?: string;
-  }>({});
+  const [errors, setErrors] = useState<{ amountUsd?: string }>({});
+  const router = useRouter();
 
   const {
     convert,
     loading: ratesLoading,
     error: ratesError,
   } = useExchangeRates();
-  const { validate } = useSendSchema(country);
+  const { validate } = useSendAmountSchema();
 
   const nAmount = parseInt(amountUsd || '0', 10);
-  const converted = (() => {
+  const converted = useMemo<number | null>(() => {
     if (!nAmount || !convert) {
       return null;
     }
-    const val = convert(nAmount, country.currency);
-    return typeof val === 'number' ? val : null;
-  })();
+    const v = convert(nAmount, country.currency);
+    return typeof v === 'number' ? v : null;
+  }, [nAmount, convert, country.currency]);
 
-  const handleSend = () => {
-    const values: SendFormValues = {
-      firstName,
-      lastName,
-      phoneDigits,
-      amountUsd,
-    };
-    const result = validate(values);
+  const handleNext = () => {
+    const result = validate({ amountUsd });
     setErrors(result.errors);
     if (Object.keys(result.errors).length > 0) {
       return;
     }
-
-    const fullPhone = `${country.phonePrefix}${phoneDigits}`;
-    Alert.alert(
-      'Sending',
-      `Sending ${amountUsd} USD to ${firstName} ${lastName} (${fullPhone}).`
-    );
+    router.push({
+      pathname: '/send/recipient',
+      params: { amountUsd },
+    });
   };
 
+  const actionColor = colors.primary;
+
+  useHeaderColor(
+    scrolled ? colors.background : actionColor,
+    scrolled ? colors.text : colors.white
+  );
+
+  const onScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
+    const y = e.nativeEvent.contentOffset.y;
+    setScrolled(y > 40);
+  };
+
+  if (ratesLoading) {
+    return (
+      <View>
+        <Text>...loading</Text>
+      </View>
+    );
+  }
+  
   return (
     <KeyboardAvoidingView
       behavior={Platform.select({ ios: 'padding', android: undefined })}
       style={{ flex: 1 }}
     >
       <ScrollView
-        contentContainerStyle={styles.container}
+        contentContainerStyle={{ backgroundColor: actionColor }}
         keyboardShouldPersistTaps='handled'
+        onScroll={onScroll}
+        scrollEventThrottle={16}
       >
-        <TextField
-          label='First Name'
-          value={firstName}
-          onChangeText={setFirstName}
-          autoCapitalize='words'
-          error={errors.firstName}
-          placeholder='Jane'
-          returnKeyType='next'
+        <SummaryBox
+          variant='primary'
+          title='Recipient receives'
+          amount={converted}
+          currency={country.currency}
+          note={
+            ratesError
+              ? 'Using fallback rates. Set EXPO_PUBLIC_OER_APP_ID for live rates.'
+              : null
+          }
         />
+        <View style={styles.amountArea}>
+          <CountrySelect
+            value={country}
+            onChange={(c) => {
+              setCountry(c);
+            }}
+          />
+          <TextField
+            label='Amount (USD 🇺🇸)'
+            value={'$' + amountUsd}
+            onChangeText={(t) => {
+              const raw = t.startsWith('$') ? t.slice(1) : t;
+              if (raw === '') {
+                setAmountUsd('');
+                return;
+              } else if (/^\d+$/.test(raw)) {
+                setAmountUsd(raw);
+              }
+            }}
+            keyboardType='number-pad'
+            error={errors.amountUsd}
+            placeholder='e.g. 10'
+            maxLength={7}
+          />
 
-        <TextField
-          label='Last Name'
-          value={lastName}
-          onChangeText={setLastName}
-          autoCapitalize='words'
-          error={errors.lastName}
-          placeholder='Doe'
-          returnKeyType='next'
-        />
-
-        <CountrySelect
-          value={country}
-          onChange={(c) => {
-            setCountry(c);
-            setPhoneDigits('');
-          }}
-        />
-
-        <PhoneField
-          country={country}
-          value={phoneDigits}
-          onChange={setPhoneDigits}
-          error={errors.phoneDigits}
-        />
-
-        <TextField
-          label='Amount (USD)'
-          value={amountUsd}
-          onChangeText={(t) => setAmountUsd(t.replace(/\D+/g, ''))}
-          keyboardType='number-pad'
-          error={errors.amountUsd}
-          placeholder='e.g. 10'
-          maxLength={7}
-        />
-
-        <View style={styles.summaryBox}>
-          <Text style={styles.summaryTitle}>Recipient receives</Text>
-          {ratesLoading ? (
-            <Text style={styles.summaryValue}>Loading rates…</Text>
-          ) : converted != null ? (
-            <Text style={styles.summaryValue}>
-              {formatMoney(converted, country.currency)}
-            </Text>
-          ) : (
-            <Text style={styles.summaryValue}>—</Text>
-          )}
-          {ratesError ? (
-            <Text style={styles.ratesNote}>
-              Using fallback rates. Set EXPO_PUBLIC_OER_APP_ID for live rates.
-            </Text>
-          ) : null}
+          <Button label='Next' onPress={handleNext} />
         </View>
-
-        <Button label='Send' onPress={handleSend} />
       </ScrollView>
     </KeyboardAvoidingView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    padding: 16,
-    backgroundColor: colors.background,
-    gap: 4,
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: '700',
-    marginBottom: 12,
-    color: colors.text,
-  },
-  summaryBox: {
-    borderWidth: 1,
-    borderColor: colors.borderMuted,
+  amountArea: {
+    borderTopLeftRadius: 16,
+    borderTopRightRadius: 16,
     backgroundColor: colors.white,
-    padding: 12,
-    borderRadius: 8,
-    marginBottom: 16,
-  },
-  summaryTitle: {
-    fontSize: 14,
-    color: colors.label,
-    marginBottom: 4,
-  },
-  summaryValue: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: colors.text,
-  },
-  ratesNote: {
-    marginTop: 6,
-    fontSize: 12,
-    color: colors.mutedText,
+    // Top shadow (iOS uses negative height to cast upward)
+    // shadowColor: '#000',
+    // shadowOffset: { width: 0, height: -2 },
+    // shadowOpacity: 0.08,
+    // shadowRadius: 6,
+    // // Android shadow (cannot cast upward; subtle elevation for depth)
+    // elevation: 6,
+    padding: 16,
   },
 });
 

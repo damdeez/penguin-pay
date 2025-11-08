@@ -1,25 +1,24 @@
 import React from 'react';
 import { StyleSheet, Text, View, Pressable } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import colors from '../../constants/theme';
 import { router } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import type { BottomTabHeaderProps } from '@react-navigation/bottom-tabs';
+import type { NativeStackHeaderProps } from '@react-navigation/native-stack';
+import useHeaderAppearance from '../../hooks/useHeaderAppearance';
 
-interface HeaderProps {
-  navigation: { goBack: () => void };
-  options: { title?: string };
-  route: { name: string };
-  back?: { title?: string; href?: string } | undefined;
-}
+type AppHeaderProps = BottomTabHeaderProps | NativeStackHeaderProps;
 
-const Header = ({ navigation, options, route, back }: HeaderProps) => {
+const Header = (props: AppHeaderProps) => {
+  const { navigation, options, route } = props;
+  const back = 'back' in props ? props.back : undefined;
   const title = options.title ?? route.name;
-  const showBack = route.name === 'send/index' || !!back;
   const insets = useSafeAreaInsets();
+  const { backgroundColor, tintColor } = useHeaderAppearance();
 
   return (
-    <View style={[styles.container, { paddingTop: insets.top + 8 }]}>
-      {showBack ? (
+    <View style={[styles.container, { paddingTop: insets.top + 8, backgroundColor }]}>
+      {!!back ? (
         <Pressable
           accessibilityRole='button'
           accessibilityLabel='Go back'
@@ -33,10 +32,10 @@ const Header = ({ navigation, options, route, back }: HeaderProps) => {
           }}
           style={styles.back}
         >
-          <Ionicons name='chevron-back' size={24} color={colors.text} />
+          <Ionicons name='chevron-back' size={24} color={tintColor} />
         </Pressable>
       ) : null}
-      <Text numberOfLines={1} style={styles.title}>
+      <Text numberOfLines={1} style={[styles.title, { color: tintColor }]}>
         {title}
       </Text>
     </View>
@@ -47,7 +46,6 @@ const styles = StyleSheet.create({
   container: {
     paddingBottom: 16,
     paddingHorizontal: 16,
-    backgroundColor: colors.background,
     flexDirection: 'row',
     justifyContent: 'flex-start',
   },
@@ -59,7 +57,6 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: '700',
-    color: colors.text,
     textAlignVertical: 'center',
   },
 });

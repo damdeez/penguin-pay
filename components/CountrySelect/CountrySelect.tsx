@@ -1,8 +1,16 @@
 import React, { useState } from 'react';
-import { Modal, Pressable, StyleSheet, Text, View, FlatList } from 'react-native';
+import {
+  Modal,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+  FlatList,
+} from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import colors from '../../constants/theme';
 import { COUNTRIES, CountryMeta } from './CountrySelect.helpers';
+import { Ionicons } from '@expo/vector-icons';
 
 interface CountrySelectProps {
   value: CountryMeta;
@@ -23,12 +31,27 @@ const CountrySelect = ({ value, onChange }: CountrySelectProps) => {
         style={styles.select}
       >
         <Text style={styles.selectText}>{selectedLabel}</Text>
+        <Ionicons name={open ? 'chevron-up' : 'chevron-down'} size={24} color={colors.text} />
       </Pressable>
 
-      <Modal visible={open} transparent animationType='slide' onRequestClose={() => setOpen(false)}>
+      <Modal
+        visible={open}
+        transparent
+        animationType='none'
+        onRequestClose={() => setOpen(false)}
+      >
         <View style={styles.backdrop}>
-          <View style={[styles.sheet, { paddingBottom: Math.max(insets.bottom, 12) }]}>
-            <View style={styles.handle} />
+          <View
+            style={[
+              styles.sheet,
+              { paddingBottom: Math.max(insets.bottom, 12) },
+            ]}
+          >
+            <Pressable
+              accessibilityRole='button'
+              onPress={() => setOpen(false)}
+              style={styles.handle}
+            />
             <Text style={styles.sheetTitle}>Select country</Text>
             <FlatList
               data={COUNTRIES}
@@ -68,6 +91,9 @@ const styles = StyleSheet.create({
     marginBottom: 6,
   },
   select: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     borderWidth: 1,
     borderColor: colors.border,
     borderRadius: 8,
@@ -81,6 +107,7 @@ const styles = StyleSheet.create({
   },
   backdrop: {
     flex: 1,
+    backgroundColor: colors.overlay,
     justifyContent: 'flex-end',
   },
   sheet: {
@@ -98,7 +125,7 @@ const styles = StyleSheet.create({
     borderRadius: 2,
     backgroundColor: colors.borderMuted,
     marginBottom: 16,
-    marginTop: 8,
+    marginTop: 4,
   },
   sheetTitle: {
     fontSize: 16,
