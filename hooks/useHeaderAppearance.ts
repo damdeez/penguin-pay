@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import {
   HeaderAppearanceContext,
   type HeaderAppearanceContextValue,
-} from '../context/HeaderAppearanceContext';
+} from '@/context/HeaderAppearanceContext';
 
 const useHeaderAppearance = (): HeaderAppearanceContextValue => {
   const ctx = useContext(HeaderAppearanceContext);
@@ -13,4 +13,3 @@ const useHeaderAppearance = (): HeaderAppearanceContextValue => {
 };
 
 export default useHeaderAppearance;
-

@@ -8,18 +8,18 @@ import {
   NativeSyntheticEvent,
   NativeScrollEvent,
 } from 'react-native';
-import CountrySelect from '../CountrySelect/CountrySelect';
-import type { CountryMeta } from '../CountrySelect/CountrySelect.helpers';
-import { COUNTRIES } from '../CountrySelect/CountrySelect.helpers';
-import TextField from '../TextField/TextField';
-import PhoneField from '../PhoneField/PhoneField';
-import Button from '../Button/Button';
-import useExchangeRates from '../../hooks/useExchangeRates';
-import { useSendSchema, type SendFormValues } from '../../hooks/useSendValidation';
-import colors from '../../constants/theme';
+import CountrySelect from '@/components/CountrySelect/CountrySelect';
+import type { CountryMeta } from '@/components/CountrySelect/CountrySelect.helpers';
+import { COUNTRIES } from '@/components/CountrySelect/CountrySelect.helpers';
+import TextField from '@/components/TextField/TextField';
+import PhoneField from '@/components/PhoneField/PhoneField';
+import Button from '@/components/Button/Button';
+import useExchangeRates from '@/hooks/useExchangeRates';
+import { useSendSchema, type SendFormValues } from '@/hooks/useSendValidation';
+import colors from '@/constants/theme';
 import { useGlobalSearchParams, useRouter } from 'expo-router';
-import useHeaderColor from '../../hooks/useHeaderColor';
-import SummaryBox from '../SummaryBox/SummaryBox';
+import useHeaderColor from '@/hooks/useHeaderColor';
+import SummaryBox from '@/components/SummaryBox/SummaryBox';
 
 const Recipient = () => {
   const params = useGlobalSearchParams();

@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import colors from '../../constants/theme';
-import { formatMoney } from './SummaryBox.helpers';
+import colors from '@/constants/theme';
+import { formatMoney } from '@/components/SummaryBox/SummaryBox.helpers';
 
 interface SummaryBoxProps {
   title?: string;

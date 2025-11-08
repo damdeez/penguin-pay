@@ -20,6 +20,18 @@ module.exports = defineConfig([
         'error',
         { vars: 'all', varsIgnorePattern: '^_', args: 'after-used', argsIgnorePattern: '^_', ignoreRestSiblings: true },
       ],
+      // Disallow parent-relative imports; prefer alias `@/`
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            {
+              group: ['../**'],
+              message: 'Use @/ absolute imports instead of parent-relative paths.',
+            },
+          ],
+        },
+      ],
       curly: ['error', 'all'],
       // 'react-native/no-unused-styles': 'error', // Enable when plugin supports ESLint flat config
     },

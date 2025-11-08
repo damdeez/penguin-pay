@@ -8,8 +8,8 @@ import {
   FlatList,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import colors from '../../constants/theme';
-import { COUNTRIES, CountryMeta } from './CountrySelect.helpers';
+import colors from '@/constants/theme';
+import { COUNTRIES, CountryMeta } from '@/components/CountrySelect/CountrySelect.helpers';
 import { Ionicons } from '@expo/vector-icons';
 
 interface CountrySelectProps {

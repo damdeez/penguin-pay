@@ -1,9 +1,9 @@
 import { Tabs } from 'expo-router';
-import Header from '../components/Header/Header';
+import Header from '@/components/Header/Header';
 import { Ionicons } from '@expo/vector-icons';
-import colors from '../constants/theme';
-import TabBar from '../components/TabBar/TabBar';
-import HeaderAppearanceProvider from '../components/HeaderAppearance/HeaderAppearanceProvider';
+import colors from '@/constants/theme';
+import TabBar from '@/components/TabBar/TabBar';
+import HeaderAppearanceProvider from '@/components/HeaderAppearance/HeaderAppearanceProvider';
 
 export default function RootLayout() {
   return (

@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import type { CountryMeta } from '../components/CountrySelect/CountrySelect.helpers';
+import type { CountryMeta } from '@/components/CountrySelect/CountrySelect.helpers';
 
 export interface SendFormValues {
   firstName: string;

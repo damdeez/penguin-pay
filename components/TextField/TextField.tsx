@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, TextInput, TextInputProps, View } from 'react-native';
-import colors from '../../constants/theme';
+import colors from '@/constants/theme';
 
 interface TextFieldProps extends Pick<TextInputProps, 'value' | 'onChangeText' | 'keyboardType' | 'placeholder' | 'autoCapitalize' | 'onBlur' | 'returnKeyType' | 'onSubmitEditing' | 'maxLength'> {
   label: string;

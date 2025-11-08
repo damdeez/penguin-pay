@@ -1,6 +1,6 @@
-import React, { useLayoutEffect, useCallback } from 'react';
+import { useLayoutEffect, useCallback } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
-import useHeaderAppearance from './useHeaderAppearance';
+import useHeaderAppearance from '@/hooks/useHeaderAppearance';
 
 const useHeaderColor = (backgroundColor: string, tintColor?: string) => {
   const { setAppearance } = useHeaderAppearance();

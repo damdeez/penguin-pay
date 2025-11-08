@@ -1,10 +1,10 @@
 import React, { PropsWithChildren, useMemo, useState } from 'react';
-import colors from '../../constants/theme';
+import colors from '@/constants/theme';
 import {
   HeaderAppearanceContext,
   type HeaderAppearanceState,
   type HeaderAppearanceContextValue,
-} from '../../context/HeaderAppearanceContext';
+} from '@/context/HeaderAppearanceContext';
 
 const HeaderAppearanceProvider = ({ children }: PropsWithChildren): React.ReactElement => {
   const [state, setState] = useState<HeaderAppearanceState>({
@@ -29,4 +29,3 @@ const HeaderAppearanceProvider = ({ children }: PropsWithChildren): React.ReactE
 };
 
 export default HeaderAppearanceProvider;
-

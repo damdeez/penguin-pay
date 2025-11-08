@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import colors from '../../constants/theme';
+import colors from '@/constants/theme';
 import { Image } from 'expo-image';
 
 const Home = () => {
@@ -36,4 +36,3 @@ const styles = StyleSheet.create({
 });
 
 export default Home;
-

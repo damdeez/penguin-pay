@@ -5,7 +5,7 @@ import { router } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import type { BottomTabHeaderProps } from '@react-navigation/bottom-tabs';
 import type { NativeStackHeaderProps } from '@react-navigation/native-stack';
-import useHeaderAppearance from '../../hooks/useHeaderAppearance';
+import useHeaderAppearance from '@/hooks/useHeaderAppearance';
 
 type AppHeaderProps = BottomTabHeaderProps | NativeStackHeaderProps;
 

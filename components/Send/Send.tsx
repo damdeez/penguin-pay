@@ -9,17 +9,17 @@ import {
   NativeSyntheticEvent,
   NativeScrollEvent,
 } from 'react-native';
-import TextField from '../TextField/TextField';
-import Button from '../Button/Button';
-import useExchangeRates from '../../hooks/useExchangeRates';
-import { useSendAmountSchema } from '../../hooks/useSendAmountValidation';
+import TextField from '@/components/TextField/TextField';
+import Button from '@/components/Button/Button';
+import useExchangeRates from '@/hooks/useExchangeRates';
+import { useSendAmountSchema } from '@/hooks/useSendAmountValidation';
 
-import colors from '../../constants/theme';
+import colors from '@/constants/theme';
 import { useRouter } from 'expo-router';
-import CountrySelect from '../CountrySelect/CountrySelect';
-import { COUNTRIES, CountryMeta } from '../CountrySelect/CountrySelect.helpers';
-import useHeaderColor from '../../hooks/useHeaderColor';
-import SummaryBox from '../SummaryBox/SummaryBox';
+import CountrySelect from '@/components/CountrySelect/CountrySelect';
+import { COUNTRIES, CountryMeta } from '@/components/CountrySelect/CountrySelect.helpers';
+import useHeaderColor from '@/hooks/useHeaderColor';
+import SummaryBox from '@/components/SummaryBox/SummaryBox';
 
 const Send = () => {
   const [amountUsd, setAmountUsd] = useState('');
