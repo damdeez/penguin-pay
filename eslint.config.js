@@ -32,6 +32,8 @@ module.exports = defineConfig([
           ],
         },
       ],
+      // Disabled: blank line before multi-line return statements
+      'local/blank-line-before-multiline-return': 'off',
       curly: ['error', 'all'],
       // 'react-native/no-unused-styles': 'error', // Enable when plugin supports ESLint flat config
     },

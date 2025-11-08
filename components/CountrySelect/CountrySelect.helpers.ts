@@ -1,9 +1,10 @@
 export type CountryCode = 'KE' | 'NG' | 'TZ' | 'UG';
+export type Currency = 'KES' | 'NGN' | 'TZS' | 'UGX';
 
 export interface CountryMeta {
   code: CountryCode;
   name: string;
-  currency: 'KES' | 'NGN' | 'TZS' | 'UGX';
+  currency: Currency;
   phonePrefix: string;
   digitsAfterPrefix: number;
 }

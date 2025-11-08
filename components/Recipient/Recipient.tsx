@@ -47,7 +47,7 @@ const Recipient = () => {
   const { validate } = useSendSchema(country);
 
   const nAmount = parseInt(amountUsd || '0', 10);
-  const converted = useMemo<number | null>(() => {
+  const convertedAmount = useMemo<number | null>(() => {
     if (!nAmount || !convert) {
       return null;
     }
@@ -163,7 +163,7 @@ const Recipient = () => {
 
         <SummaryBox
           title='Recipient receives'
-          amount={converted}
+          amount={convertedAmount}
           currency={country.currency}
           note={ratesError ? 'Using fallback rates. Set EXPO_PUBLIC_OER_APP_ID for live rates.' : null}
         />

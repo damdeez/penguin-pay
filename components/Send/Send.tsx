@@ -17,7 +17,10 @@ import { useSendAmountSchema } from '@/hooks/useSendAmountValidation';
 import colors from '@/constants/theme';
 import { useRouter } from 'expo-router';
 import CountrySelect from '@/components/CountrySelect/CountrySelect';
-import { COUNTRIES, CountryMeta } from '@/components/CountrySelect/CountrySelect.helpers';
+import {
+  COUNTRIES,
+  CountryMeta,
+} from '@/components/CountrySelect/CountrySelect.helpers';
 import useHeaderColor from '@/hooks/useHeaderColor';
 import SummaryBox from '@/components/SummaryBox/SummaryBox';
 
@@ -37,11 +40,12 @@ const Send = () => {
   const { validate } = useSendAmountSchema();
 
   const nAmount = parseInt(amountUsd || '0', 10);
-  const converted = useMemo<number | null>(() => {
+  const convertedAmount = useMemo<number | null>(() => {
     if (!nAmount || !convert) {
       return null;
     }
     const v = convert(nAmount, country.currency);
+
     return typeof v === 'number' ? v : null;
   }, [nAmount, convert, country.currency]);
 
@@ -76,7 +80,7 @@ const Send = () => {
       </View>
     );
   }
-  
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.select({ ios: 'padding', android: undefined })}
@@ -91,7 +95,7 @@ const Send = () => {
         <SummaryBox
           variant='primary'
           title='Recipient receives'
-          amount={converted}
+          amount={convertedAmount}
           currency={country.currency}
           note={
             ratesError

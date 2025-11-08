@@ -2,6 +2,7 @@ import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import colors from '@/constants/theme';
+import { router } from 'expo-router';
 
 type LabelPosition = 'beside-icon' | 'below-icon';
 
@@ -58,12 +59,18 @@ const TabBar = ({ state, descriptors, navigation }: TabBarProps) => {
             ? options.tabBarLabel
             : options.title || route.name;
         const color = focused ? colors.primary : colors.mutedText;
+        
         const onPress = () => {
           navigation.emit({ type: 'tabPress', target: route.key });
-          if (!focused) {
+          if (route.name === 'send') {
+            router.navigate('/send');
+
+            return;
+          } else if (!focused) {
             navigation.navigate(route.name);
           }
         };
+        
         return (
           <Pressable
             key={route.key}

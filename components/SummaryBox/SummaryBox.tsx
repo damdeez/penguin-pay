@@ -2,11 +2,12 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import colors from '@/constants/theme';
 import { formatMoney } from '@/components/SummaryBox/SummaryBox.helpers';
+import { Currency } from '@/components//CountrySelect/CountrySelect.helpers';
 
 interface SummaryBoxProps {
   title?: string;
   amount?: number | null;
-  currency?: string;
+  currency?: Currency;
   fallbackText?: string;
   note?: string | null;
   variant?: 'light' | 'primary';

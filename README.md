@@ -1,8 +1,8 @@
-# PenguinPay — Local Setup
+# PenguinPay 🐧
 
 ## Prerequisites
 
-- Node 18+ and Bun
+- Node 22+ and Bun
 - Xcode + iOS Simulator (macOS) and/or Android Studio + Emulator
 - Recommended: Expo CLI (used via `bun x expo ...`)
 
