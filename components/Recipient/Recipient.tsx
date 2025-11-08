@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import {
   Alert,
   KeyboardAvoidingView,
@@ -23,13 +23,16 @@ import SummaryBox from '@/components/SummaryBox/SummaryBox';
 
 const Recipient = () => {
   const params = useGlobalSearchParams();
+  const amountUsdStr =
+    typeof params.amountUsd === 'string'
+      ? params.amountUsd
+      : Array.isArray(params.amountUsd)
+      ? params.amountUsd[0] ?? ''
+      : '';
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [country, setCountry] = useState<CountryMeta>(COUNTRIES[0]);
   const [phoneDigits, setPhoneDigits] = useState('');
-  const [amountUsd, setAmountUsd] = useState(
-    typeof params.amountUsd === 'string' ? params.amountUsd : ''
-  );
   const [scrolled, setScrolled] = useState(false);
 
   const [errors, setErrors] = useState<{
@@ -46,14 +49,14 @@ const Recipient = () => {
   } = useExchangeRates();
   const { validate } = useSendSchema(country);
 
-  const nAmount = parseInt(amountUsd || '0', 10);
-  const convertedAmount = useMemo<number | null>(() => {
-    if (!nAmount || !convert) {
-      return null;
-    }
+  const nAmount = parseInt(amountUsdStr || '0', 10);
+  let convertedAmount: number | null = null;
+  if (nAmount && convert) {
     const v = convert(nAmount, country.currency);
-    return typeof v === 'number' ? v : null;
-  }, [nAmount, convert, country.currency]);
+    if (typeof v === 'number') {
+      convertedAmount = v;
+    }
+  }
 
 
   const handleSend = () => {
@@ -61,7 +64,7 @@ const Recipient = () => {
       firstName,
       lastName,
       phoneDigits,
-      amountUsd,
+      amountUsd: amountUsdStr,
     };
     const result = validate(values);
     setErrors(result.errors);
@@ -73,7 +76,7 @@ const Recipient = () => {
     const fullPhone = `${country.phonePrefix}${phoneDigits}`;
     Alert.alert(
       'Sending',
-      `Sending ${amountUsd} USD to ${firstName} ${lastName} (${fullPhone}).`,
+      `Sending ${amountUsdStr} USD to ${firstName} ${lastName} (${fullPhone}).`,
       [
         {
           text: 'Cancel',
@@ -143,29 +146,15 @@ const Recipient = () => {
           error={errors.phoneDigits}
         />
 
-        <TextField
-          label='Amount (USD 🇺🇸)'
-          value={'$' + amountUsd}
-          onChangeText={(t) => {
-            const raw = t.startsWith('$') ? t.slice(1) : t;
-            if (raw === '') {
-              setAmountUsd('');
-              return;
-            } else if (/^\d+$/.test(raw)) {
-              setAmountUsd(raw);
-            }
-          }}
-          keyboardType='number-pad'
-          error={errors.amountUsd}
-          placeholder='e.g. 10'
-          maxLength={7}
-        />
-
         <SummaryBox
-          title='Recipient receives'
+          title={'Recipient receives'}
           amount={convertedAmount}
           currency={country.currency}
-          note={ratesError ? 'Using fallback rates. Set EXPO_PUBLIC_OER_APP_ID for live rates.' : null}
+          note={
+            ratesError
+              ? 'Using fallback rates. Set EXPO_PUBLIC_OER_APP_ID for live rates.'
+              : `Sending $${amountUsdStr} USD`
+          }
         />
 
         <Button label='Send' onPress={handleSend} />

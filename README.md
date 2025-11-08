@@ -1,4 +1,4 @@
-# PenguinPay 🐧
+# Penguin Pay 🐧
 
 ## Prerequisites
 

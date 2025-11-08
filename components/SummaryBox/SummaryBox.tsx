@@ -57,8 +57,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
     padding: 12,
     borderRadius: 4,
-    margin: 16,
-    marginBottom: 0,
+    marginBottom: 16,
   },
   summaryBoxPrimary: {
     backgroundColor: colors.primary,

@@ -1,11 +1,12 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   KeyboardAvoidingView,
   Platform,
   ScrollView,
   StyleSheet,
   View,
-  Text,
+  Animated,
+  Easing,
   NativeSyntheticEvent,
   NativeScrollEvent,
 } from 'react-native';
@@ -23,6 +24,7 @@ import {
 } from '@/components/CountrySelect/CountrySelect.helpers';
 import useHeaderColor from '@/hooks/useHeaderColor';
 import SummaryBox from '@/components/SummaryBox/SummaryBox';
+import { AntDesign } from '@expo/vector-icons';
 
 const Send = () => {
   const [amountUsd, setAmountUsd] = useState('');
@@ -31,6 +33,7 @@ const Send = () => {
 
   const [errors, setErrors] = useState<{ amountUsd?: string }>({});
   const router = useRouter();
+  const spinAnim = useRef(new Animated.Value(0)).current;
 
   const {
     convert,
@@ -40,14 +43,13 @@ const Send = () => {
   const { validate } = useSendAmountSchema();
 
   const nAmount = parseInt(amountUsd || '0', 10);
-  const convertedAmount = useMemo<number | null>(() => {
-    if (!nAmount || !convert) {
-      return null;
-    }
+  let convertedAmount: number | null = null;
+  if (nAmount && convert) {
     const v = convert(nAmount, country.currency);
-
-    return typeof v === 'number' ? v : null;
-  }, [nAmount, convert, country.currency]);
+    if (typeof v === 'number') {
+      convertedAmount = v;
+    }
+  }
 
   const handleNext = () => {
     const result = validate({ amountUsd });
@@ -73,10 +75,36 @@ const Send = () => {
     setScrolled(y > 40);
   };
 
+  // Spinning loading icon animation
+  useEffect(() => {
+    const loop = Animated.loop(
+      Animated.timing(spinAnim, {
+        toValue: 1,
+        duration: 1000,
+        easing: Easing.linear,
+        useNativeDriver: true,
+      })
+    );
+    loop.start();
+    return () => {
+      loop.stop();
+      spinAnim.setValue(0);
+    };
+  }, [spinAnim]);
+  
+  const spin = spinAnim.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['0deg', '360deg'],
+  });
+  
+  const spinnerStyle = { transform: [{ rotate: spin }] };
+
   if (ratesLoading) {
     return (
-      <View>
-        <Text>...loading</Text>
+      <View style={styles.loading}>
+        <Animated.View style={spinnerStyle}>
+          <AntDesign name='loading' size={24} color={colors.text} />
+        </Animated.View>
       </View>
     );
   }
@@ -87,7 +115,7 @@ const Send = () => {
       style={{ flex: 1 }}
     >
       <ScrollView
-        contentContainerStyle={{ backgroundColor: actionColor }}
+        contentContainerStyle={styles.primaryHero}
         keyboardShouldPersistTaps='handled'
         onScroll={onScroll}
         scrollEventThrottle={16}
@@ -136,17 +164,19 @@ const Send = () => {
 };
 
 const styles = StyleSheet.create({
+  loading: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: colors.background,
+  },
+  primaryHero: {
+    backgroundColor: colors.primary,
+  },
   amountArea: {
     borderTopLeftRadius: 16,
     borderTopRightRadius: 16,
     backgroundColor: colors.white,
-    // Top shadow (iOS uses negative height to cast upward)
-    // shadowColor: '#000',
-    // shadowOffset: { width: 0, height: -2 },
-    // shadowOpacity: 0.08,
-    // shadowRadius: 6,
-    // // Android shadow (cannot cast upward; subtle elevation for depth)
-    // elevation: 6,
     padding: 16,
   },
 });

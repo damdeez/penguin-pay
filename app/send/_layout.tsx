@@ -11,7 +11,7 @@ export default function SendLayout() {
         contentStyle: { backgroundColor: colors.background },
       }}
     >
-      <Stack.Screen name='index' options={{ title: 'Send' }} />
+      <Stack.Screen name='index' options={{ title: 'Amount to Send' }} />
       <Stack.Screen name='recipient/index' options={{ title: 'Recipient' }} />
     </Stack>
   );
