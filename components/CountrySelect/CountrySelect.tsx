@@ -11,6 +11,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import colors from '@/constants/theme';
 import { COUNTRIES, CountryMeta } from '@/components/CountrySelect/CountrySelect.helpers';
 import { Ionicons } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
 
 interface CountrySelectProps {
   value: CountryMeta;
@@ -20,7 +21,9 @@ interface CountrySelectProps {
 const CountrySelect = ({ value, onChange }: CountrySelectProps) => {
   const [open, setOpen] = useState(false);
   const insets = useSafeAreaInsets();
+  const router = useRouter();
   const selectedLabel = `${value.name} (${value.currency})`;
+  console.info('router', router);
 
   return (
     <View style={styles.container}>

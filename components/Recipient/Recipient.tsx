@@ -43,7 +43,7 @@ const Recipient = () => {
   } = useExchangeRates();
   const { validate } = useSendSchema(country);
 
-  const nAmount = parseInt(amountUsdStr || '0', 10);
+  const nAmount = Number(amountUsdStr);
   let convertedAmount: number | null = null;
   if (nAmount && convert) {
     const v = convert(nAmount, country.currency);

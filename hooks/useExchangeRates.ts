@@ -68,7 +68,7 @@ const useExchangeRates = (): ExchangeResult => {
     if (!rate || Number.isNaN(amountUsd)) {
       return null;
     }
-    return parseFloat((amountUsd * rate).toFixed(2));
+    return Number((amountUsd * rate).toFixed(2));
   };
 
   return { rates, base: 'USD', loading, error, convert };
