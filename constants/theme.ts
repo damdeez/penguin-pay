@@ -13,3 +13,12 @@ const colors = {
 };
 
 export default colors;
+
+
+// :root {
+//   --color-1: #2563EB;
+//   --color-2: #f14199;
+//   --color-3: #b5bbfa;
+//   --color-4: #d3dde1;
+//   --color-5: #a1d9fc;
+// }

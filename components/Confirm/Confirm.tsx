@@ -48,7 +48,7 @@ const Confirm = () => {
       }),
     ]).start(({ finished }) => {
       if (finished) {
-        setTimeout(() => router.push('/'), 1000);
+        setTimeout(() => router.replace('/'), 1000);
       }
     });
   }, [confirming, opacity, router, scale]);
