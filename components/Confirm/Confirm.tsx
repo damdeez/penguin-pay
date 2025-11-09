@@ -56,7 +56,7 @@ const Confirm = () => {
   return (
     <View style={styles.container}>
       <View style={styles.card}>
-        <Text style={styles.title}>Confirm Transfer</Text>
+        <Text style={styles.title}>Confirm Details</Text>
         <View style={styles.row}>
           <Text style={styles.label}>Recipient</Text>
           <Text style={styles.value}>
@@ -69,7 +69,7 @@ const Confirm = () => {
         </View>
         <View style={styles.row}>
           <Text style={styles.label}>Amount (USD)</Text>
-          <Text style={styles.value}>{Number(amountUsd).toFixed(2)}</Text>
+          <Text style={styles.value}>${Number(amountUsd).toFixed(2)}</Text>
         </View>
         <View style={styles.row}>
           <Text style={styles.label}>Recipient Receives</Text>

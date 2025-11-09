@@ -140,7 +140,7 @@ const Recipient = () => {
           note={
             ratesError
               ? 'Using fallback rates. Set EXPO_PUBLIC_OER_APP_ID for live rates.'
-              : `Sending ${amountUsdStr} USD`
+              : `You are sending $${amountUsdStr} USD`
           }
         />
 
