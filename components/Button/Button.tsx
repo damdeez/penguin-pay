@@ -29,7 +29,7 @@ const Button = ({ label, onPress, disabled = false, style }: ButtonProps) => {
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: colors.primary,
+    backgroundColor: colors.complimentary1,
     paddingVertical: 14,
     paddingHorizontal: 16,
     borderRadius: 8,
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     opacity: 0.9,
   },
   buttonDisabled: {
-    backgroundColor: colors.primaryMuted,
+    backgroundColor: colors.borderMuted,
   },
   label: {
     color: colors.white,

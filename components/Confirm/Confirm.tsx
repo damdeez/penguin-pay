@@ -69,7 +69,7 @@ const Confirm = () => {
         </View>
         <View style={styles.row}>
           <Text style={styles.label}>Amount (USD)</Text>
-          <Text style={styles.value}>${amountUsd}</Text>
+          <Text style={styles.value}>{Number(amountUsd).toFixed(2)}</Text>
         </View>
         <View style={styles.row}>
           <Text style={styles.label}>Recipient Receives</Text>

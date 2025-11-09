@@ -9,21 +9,26 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import colors from '@/constants/theme';
-import { COUNTRIES, CountryMeta } from '@/components/CountrySelect/CountrySelect.helpers';
+import {
+  COUNTRIES,
+  CountryMeta,
+} from '@/components/CountrySelect/CountrySelect.helpers';
 import { Ionicons } from '@expo/vector-icons';
-import { useRouter } from 'expo-router';
 
 interface CountrySelectProps {
   value: CountryMeta;
   onChange: (country: CountryMeta) => void;
+  showPhonePrefix?: boolean;
 }
 
-const CountrySelect = ({ value, onChange }: CountrySelectProps) => {
+const CountrySelect = ({
+  value,
+  onChange,
+  showPhonePrefix = true,
+}: CountrySelectProps) => {
   const [open, setOpen] = useState(false);
   const insets = useSafeAreaInsets();
-  const router = useRouter();
   const selectedLabel = `${value.name} (${value.currency})`;
-  console.info('router', router);
 
   return (
     <View style={styles.container}>
@@ -34,7 +39,11 @@ const CountrySelect = ({ value, onChange }: CountrySelectProps) => {
         style={styles.select}
       >
         <Text style={styles.selectText}>{selectedLabel}</Text>
-        <Ionicons name={open ? 'chevron-up' : 'chevron-down'} size={24} color={colors.text} />
+        <Ionicons
+          name={open ? 'chevron-up' : 'chevron-down'}
+          size={24}
+          color={colors.text}
+        />
       </Pressable>
 
       <Modal
@@ -70,7 +79,9 @@ const CountrySelect = ({ value, onChange }: CountrySelectProps) => {
                   <Text style={styles.optionText}>
                     {item.name} ({item.currency})
                   </Text>
-                  <Text style={styles.optionSub}>{item.phonePrefix}</Text>
+                  {showPhonePrefix ? (
+                    <Text style={styles.optionSub}>{item.phonePrefix}</Text>
+                  ) : null}
                 </Pressable>
               )}
             />

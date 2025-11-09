@@ -91,12 +91,12 @@ const Send = () => {
       spinAnim.setValue(0);
     };
   }, [spinAnim]);
-  
+
   const spin = spinAnim.interpolate({
     inputRange: [0, 1],
     outputRange: ['0deg', '360deg'],
   });
-  
+
   const spinnerStyle = { transform: [{ rotate: spin }] };
 
   if (ratesLoading) {
@@ -137,6 +137,7 @@ const Send = () => {
             onChange={(c) => {
               setCountry(c);
             }}
+            showPhonePrefix={false}
           />
           <TextField
             label='Amount (USD 🇺🇸)'
@@ -156,7 +157,11 @@ const Send = () => {
             maxLength={7}
           />
 
-          <Button label='Next' onPress={handleNext} />
+          <Button
+            label='Next'
+            onPress={handleNext}
+            disabled={amountUsd.length <= 0}
+          />
         </View>
       </ScrollView>
     </KeyboardAvoidingView>

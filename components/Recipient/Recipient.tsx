@@ -21,7 +21,9 @@ import useHeaderColor from '@/hooks/useHeaderColor';
 import SummaryBox from '@/components/SummaryBox/SummaryBox';
 
 const Recipient = () => {
-  const { amountUsd: amountUsdParam } = useLocalSearchParams<{ amountUsd?: string }>();
+  const { amountUsd: amountUsdParam } = useLocalSearchParams<{
+    amountUsd?: string;
+  }>();
   const amountUsdStr = amountUsdParam ?? '';
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -36,11 +38,10 @@ const Recipient = () => {
     amountUsd?: string;
   }>({});
   const router = useRouter();
+  const isDisabled =
+    firstName.length <= 0 || lastName.length <= 0 || phoneDigits.length <= 0;
 
-  const {
-    convert,
-    error: ratesError,
-  } = useExchangeRates();
+  const { convert, error: ratesError } = useExchangeRates();
   const { validate } = useSendSchema(country);
 
   const nAmount = Number(amountUsdStr);
@@ -143,7 +144,7 @@ const Recipient = () => {
           }
         />
 
-        <Button label='Send' onPress={handleSend} />
+        <Button label='Next' onPress={handleSend} disabled={isDisabled} />
       </ScrollView>
     </KeyboardAvoidingView>
   );
@@ -161,7 +162,6 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     color: colors.text,
   },
-  
 });
 
 export default Recipient;
