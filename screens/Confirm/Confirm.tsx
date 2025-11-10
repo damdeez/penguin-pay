@@ -79,7 +79,11 @@ const Confirm = () => {
         </View>
       </View>
 
-      <Button label='Confirm' onPress={() => setConfirming(true)} />
+      <Button
+        label='Confirm'
+        onPress={() => setConfirming(true)}
+        disabled={confirming}
+      />
 
       {confirming ? (
         <View style={styles.overlay} pointerEvents='none'>

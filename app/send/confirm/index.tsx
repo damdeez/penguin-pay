@@ -1,5 +1,5 @@
 import React from 'react';
-import Confirm from '@/components/Confirm/Confirm';
+import Confirm from '@/screens/Confirm/Confirm';
 
 const ConfirmScreen = () => {
   return <Confirm />;

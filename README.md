@@ -68,7 +68,7 @@ bun x eslint . --max-warnings=0
 
 You can start developing by editing files inside the `app` directory. The project uses [Expo Router](https://docs.expo.dev/router/introduction) for file-based routing.
 
-## PenguinPay Send Screen
+## Penguin Pay Send Screen
 
 - Send screen lives at `app/send/index.tsx:1`.
 - Reusable inputs/components in `components/`.

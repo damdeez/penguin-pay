@@ -1,5 +1,5 @@
 import React from 'react';
-import RecipientView from '@/components/Recipient/Recipient';
+import RecipientView from '@/screens/Recipient/Recipient';
 
 const Recipient = () => {
   return <RecipientView />;
