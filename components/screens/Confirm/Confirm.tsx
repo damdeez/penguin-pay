@@ -86,9 +86,7 @@ const Confirm = () => {
       />
       <Button
         label='Cancel'
-        onPress={() => {
-          router.replace('/');
-        }}
+        onPress={() => router.replace('/')}
         disabled={confirming}
         variant='outline'
         style={{ marginTop: -8 }}
