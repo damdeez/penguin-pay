@@ -7,9 +7,16 @@ interface ButtonProps {
   onPress: () => void;
   disabled?: boolean;
   style?: ViewStyle;
+  variant?: 'solid' | 'outline';
 }
 
-const Button = ({ label, onPress, disabled = false, style }: ButtonProps) => {
+const Button = ({
+  label,
+  onPress,
+  disabled = false,
+  style,
+  variant = 'solid',
+}: ButtonProps) => {
   return (
     <Pressable
       accessibilityRole='button'
@@ -19,18 +26,19 @@ const Button = ({ label, onPress, disabled = false, style }: ButtonProps) => {
         styles.button,
         pressed && !disabled ? styles.buttonPressed : null,
         disabled ? styles.buttonDisabled : null,
+        variant === 'solid' ? styles.solid : null,
+        variant === 'outline' ? styles.outline : null,
         style,
       ]}
     >
-      <Text style={styles.label}>{label}</Text>
+      <Text style={variant === 'outline' ? styles.outlineLabel : styles.label}>{label}</Text>
     </Pressable>
   );
 };
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: colors.complimentary1,
-    paddingVertical: 14,
+    paddingVertical: 12,
     paddingHorizontal: 16,
     borderRadius: 8,
     alignItems: 'center',
@@ -45,6 +53,23 @@ const styles = StyleSheet.create({
     color: colors.white,
     fontSize: 16,
     fontWeight: '600',
+  },
+  outlineLabel: {
+    color: colors.text,
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  solid: {
+    backgroundColor: colors.complimentary1,
+    borderColor: colors.complimentary1,
+    borderWidth: 1.5,
+    borderStyle: 'solid',
+  },
+  outline: {
+    backgroundColor: colors.white,
+    borderColor: colors.text,
+    borderWidth: 1.5,
+    borderStyle: 'solid',
   },
 });
 

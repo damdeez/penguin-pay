@@ -84,6 +84,15 @@ const Confirm = () => {
         onPress={() => setConfirming(true)}
         disabled={confirming}
       />
+      <Button
+        label='Cancel'
+        onPress={() => {
+          router.replace('/');
+        }}
+        disabled={confirming}
+        variant='outline'
+        style={{ marginTop: -8 }}
+      />
 
       {confirming ? (
         <View style={styles.overlay} pointerEvents='none'>
