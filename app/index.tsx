@@ -1,5 +1,5 @@
 import React from 'react';
-import Home from '@/screens/Home/Home';
+import Home from '@/components/screens/Home/Home';
 
 export default function Index() {
   return <Home />;

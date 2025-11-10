@@ -12,7 +12,7 @@ import colors from '@/constants/theme';
 import {
   COUNTRIES,
   CountryMeta,
-} from '@/components/CountrySelect/CountrySelect.helpers';
+} from '@/components/ui/CountrySelect/CountrySelect.helpers';
 import { Ionicons } from '@expo/vector-icons';
 
 interface CountrySelectProps {

@@ -1,5 +1,5 @@
 import React from 'react';
-import Send from '@/screens/Send/Send';
+import Send from '@/components/screens/Send/Send';
 
 const SendScreen = () => {
   return <Send />;

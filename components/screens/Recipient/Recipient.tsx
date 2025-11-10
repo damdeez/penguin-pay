@@ -7,18 +7,18 @@ import {
   NativeSyntheticEvent,
   NativeScrollEvent,
 } from 'react-native';
-import CountrySelect from '@/components/CountrySelect/CountrySelect';
-import type { CountryMeta } from '@/components/CountrySelect/CountrySelect.helpers';
-import { COUNTRIES } from '@/components/CountrySelect/CountrySelect.helpers';
-import TextField from '@/components/TextField/TextField';
-import PhoneField from '@/components/PhoneField/PhoneField';
-import Button from '@/components/Button/Button';
+import CountrySelect from '@/components/ui/CountrySelect/CountrySelect';
+import type { CountryMeta } from '@/components/ui/CountrySelect/CountrySelect.helpers';
+import { COUNTRIES } from '@/components/ui/CountrySelect/CountrySelect.helpers';
+import TextField from '@/components/ui/TextField/TextField';
+import PhoneField from '@/components/ui/PhoneField/PhoneField';
+import Button from '@/components/ui/Button/Button';
 import useExchangeRates from '@/hooks/useExchangeRates';
 import { useSendSchema, type SendFormValues } from '@/hooks/useSendValidation';
 import colors from '@/constants/theme';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import useHeaderColor from '@/hooks/useHeaderColor';
-import SummaryBox from '@/components/SummaryBox/SummaryBox';
+import SummaryBox from '@/components/ui/SummaryBox/SummaryBox';
 
 const Recipient = () => {
   const { amountUsd: amountUsdParam } = useLocalSearchParams<{

@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 export interface SendAmountValues {
-  amountUsd: string; // raw input, digits only
+  amountUsd: string;
 }
 
 export type SendAmountErrors = Partial<Record<keyof SendAmountValues, string>>;

@@ -1,5 +1,5 @@
 import { Stack } from 'expo-router';
-import Header from '@/components/Header/Header';
+import Header from '@/components/ui/Header/Header';
 import colors from '@/constants/theme';
 
 export default function SendLayout() {

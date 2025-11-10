@@ -1,11 +1,11 @@
 import { z } from 'zod';
-import type { CountryMeta } from '@/components/CountrySelect/CountrySelect.helpers';
+import type { CountryMeta } from '@/components/ui/CountrySelect/CountrySelect.helpers';
 
 export interface SendFormValues {
   firstName: string;
   lastName: string;
   phoneDigits: string;
-  amountUsd: string; // raw input, digits only
+  amountUsd: string;
 }
 
 export type SendFormErrors = Partial<Record<keyof SendFormValues, string>>;

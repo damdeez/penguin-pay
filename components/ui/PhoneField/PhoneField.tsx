@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, TextInput, View } from 'react-native';
 import colors from '@/constants/theme';
-import type { CountryMeta } from '@/components/CountrySelect/CountrySelect.helpers';
+import type { CountryMeta } from '@/components/ui/CountrySelect/CountrySelect.helpers';
 
 interface PhoneFieldProps {
   country: CountryMeta;

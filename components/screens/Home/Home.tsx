@@ -7,7 +7,7 @@ const Home = () => {
   return (
     <View style={styles.container}>
       <Image
-        source={require('../../assets/branding/penguin-mark.svg')}
+        source={require('../../../assets/branding/penguin-mark.svg')}
         style={styles.logo}
       />
       <Text style={styles.title}>Welcome to Penguin Pay!</Text>

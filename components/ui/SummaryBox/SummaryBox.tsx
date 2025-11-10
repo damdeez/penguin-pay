@@ -1,8 +1,8 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import colors from '@/constants/theme';
-import { formatMoney } from '@/components/SummaryBox/SummaryBox.helpers';
-import { Currency } from '@/components//CountrySelect/CountrySelect.helpers';
+import { formatMoney } from '@/components/ui/SummaryBox/SummaryBox.helpers';
+import { Currency } from '@/components/ui/CountrySelect/CountrySelect.helpers';
 
 interface SummaryBoxProps {
   title?: string;

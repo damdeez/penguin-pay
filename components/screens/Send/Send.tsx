@@ -10,20 +10,20 @@ import {
   NativeSyntheticEvent,
   NativeScrollEvent,
 } from 'react-native';
-import TextField from '@/components/TextField/TextField';
-import Button from '@/components/Button/Button';
+import TextField from '@/components/ui/TextField/TextField';
+import Button from '@/components/ui/Button/Button';
 import useExchangeRates from '@/hooks/useExchangeRates';
 import { useSendAmountSchema } from '@/hooks/useSendAmountValidation';
 
 import colors from '@/constants/theme';
 import { useRouter } from 'expo-router';
-import CountrySelect from '@/components/CountrySelect/CountrySelect';
+import CountrySelect from '@/components/ui/CountrySelect/CountrySelect';
 import {
   COUNTRIES,
   CountryMeta,
-} from '@/components/CountrySelect/CountrySelect.helpers';
+} from '@/components/ui/CountrySelect/CountrySelect.helpers';
 import useHeaderColor from '@/hooks/useHeaderColor';
-import SummaryBox from '@/components/SummaryBox/SummaryBox';
+import SummaryBox from '@/components/ui/SummaryBox/SummaryBox';
 import { AntDesign } from '@expo/vector-icons';
 
 const Send = () => {

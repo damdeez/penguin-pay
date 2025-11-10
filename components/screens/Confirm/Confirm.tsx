@@ -2,8 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Animated, Easing, StyleSheet, Text, View } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import colors from '@/constants/theme';
-import { COUNTRIES } from '@/components/CountrySelect/CountrySelect.helpers';
-import Button from '@/components/Button/Button';
+import { COUNTRIES } from '@/components/ui/CountrySelect/CountrySelect.helpers';
+import Button from '@/components/ui/Button/Button';
 import { Ionicons } from '@expo/vector-icons';
 
 const Confirm = () => {
