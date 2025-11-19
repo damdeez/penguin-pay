@@ -4,10 +4,16 @@ type Rates = Record<string, number>;
 
 interface ExchangeResult {
   rates: Rates | null;
-  base: string;
   loading: boolean;
   error: string | null;
   convert: (amountUsd: number, currency: string) => number | null;
+}
+
+enum CurrencyCode {
+  KES,
+  NGN,
+  TZS,
+  UGX,
 }
 
 const FALLBACK_RATES: Rates = {
@@ -23,6 +29,7 @@ const useExchangeRates = (): ExchangeResult => {
   const [rates, setRates] = useState<Rates | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const baseCurrency = 'USD'
 
   useEffect(() => {
     const appId = process.env.EXPO_PUBLIC_OER_APP_ID;
@@ -34,21 +41,23 @@ const useExchangeRates = (): ExchangeResult => {
     const fetchRates = async () => {
       try {
         setLoading(true);
-        const res = await fetch(`${LATEST_URL}?app_id=${appId}`, {
-          signal: controller.signal,
-        });
+        const res = await fetch(
+          `${LATEST_URL}?app_id=${appId}&base=${baseCurrency}`,
+          {
+            signal: controller.signal,
+          }
+        );
         if (!res.ok) {
           throw new Error(`Failed to fetch rates: ${res.status}`);
         }
         const data: { rates: Rates; base: string } = await res.json();
         const subset: Rates = {
-          KES: data.rates['KES'],
-          NGN: data.rates['NGN'],
-          TZS: data.rates['TZS'],
-          UGX: data.rates['UGX'],
+          KES: data.rates[CurrencyCode.KES],
+          NGN: data.rates[CurrencyCode.NGN],
+          TZS: data.rates[CurrencyCode.TZS],
+          UGX: data.rates[CurrencyCode.UGX],
         };
         setRates(subset);
-        setError(null);
       } catch (e) {
         setError(e instanceof Error ? e.message : 'Unknown error');
         setRates(FALLBACK_RATES);
@@ -71,7 +80,7 @@ const useExchangeRates = (): ExchangeResult => {
     return Number((amountUsd * rate).toFixed(2));
   };
 
-  return { rates, base: 'USD', loading, error, convert };
+  return { rates, loading, error, convert };
 };
 
 export default useExchangeRates;
